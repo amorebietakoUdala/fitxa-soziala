@@ -1,0 +1,106 @@
+  <script type="text/javascript">
+        var minDate, maxDate;
+        
+        // Custom filtering function which will search data in column four between two values
+        $.fn.dataTable.ext.search.push(
+            function( settings, data, dataIndex ) {
+                var min = minDate.val();
+                var max = maxDate.val();
+                var date = new Date( data[5] );
+                        
+                if (
+                    ( min === null && max === null ) ||
+                    ( min === null && date <= max ) ||
+                    ( min <= date   && max === null ) ||
+                    ( min <= date   && date <= max )
+                ) {
+                    return true;
+                }
+                return false;
+            }
+        );
+        
+        $(document).ready(function() {
+                    
+            // Create date inputs
+            minDate = new DateTime($('#min'), {
+                format: 'YYYY-MM-DD',
+                i18n: {
+                    previous: "{{"Aurrekoa"|trans|capitalize}}",
+                    next:     "{{"Hurrengoa"|trans|capitalize}}",
+                    months:   {{"hilabeteak"|trans|raw}},
+                    weekdays: {{"asteegunak"|trans|raw}}
+                }
+
+                
+            });
+            
+            maxDate = new DateTime($('#max'), {
+                format: 'YYYY-MM-DD',
+                i18n: {
+                    previous: "{{"Aurrekoa"|trans|capitalize}}",
+                    next:     "{{"Hurrengoa"|trans|capitalize}}",
+                    months:   {{"hilabeteak"|trans|raw}},
+                    weekdays: {{"asteegunak"|trans|raw}}
+                }
+            });
+            
+        
+            // DataTables initialisation
+            if ( $('#fitxak_table td').length > 1 ){
+                var table = $('#fitxak_table').DataTable( {
+                
+                    dom: 'Bfrtip',
+                    buttons: [
+                        { extend: 'print', exportOptions: { columns: ':visible' } },
+                        { extend: 'pdf', exportOptions: { columns: ':visible' } },
+                        { extend: 'excel', exportOptions: { columns: ':visible' } },
+                        { extend: 'csv', exportOptions: { columns: ':visible' } },
+                        { extend: 'copy', exportOptions: { columns: ':visible' } },
+                        'colvis'
+                    ],
+                    
+                    
+                
+                    language: {
+                    
+                        "sProcessing":     "{{"Prozesatzen..."|trans }}",
+                        "sLengthMenu":     "{{"Erakutsi _MENU_ erregistro"|trans }}",
+                        "sZeroRecords":    "{{"Ez da emaitzarik aurkitu"|trans }}",
+                        "sEmptyTable":     "{{"Taula hontan ez dago inongo datu erabilgarririk"|trans }}",
+                        "sInfo":           "{{"_START_ -etik _END_ -erako erregistroak erakusten, guztira _TOTAL_ erregistro"|trans }}",
+                        "sInfoEmpty":      "{{"0tik 0rako erregistroak erakusten, guztira 0 erregistro"|trans }}",
+                        "sInfoFiltered":   "{{"(guztira _MAX_ erregistro iragazten)"|trans }}",
+                        "sSearch":         "{{"Aurkitu:"|trans }}",
+                        "sInfoThousands":  ",",
+                        "sLoadingRecords": "{{"Abiarazten..."|trans }}",
+                        "oPaginate": {
+                                "sFirst":    "{{"Lehena"|trans }}",
+                                "sLast":     "{{"Azkena"|trans }}",
+                                "sNext":     "{{"Hurrengoa"|trans }}",
+                                "sPrevious": "{{"Aurrekoa"|trans }}"
+                        },
+                        "oAria": {
+                                "sSortAscending": "{{": Zutabea goranzko eran ordenatzeko aktibatu" |trans }}",
+                                "sSortDescending": "{{": Zutabea beheranzko eran ordenatzeko aktibatu"|trans }}"
+                        },
+                        buttons: {
+                            colvis: '{{"Eremuak aukeratu"|trans|capitalize}}',
+                            copy: '{{"kopiatu"|trans|capitalize}}',
+                            print: '{{"inprimatu"|trans|capitalize}}',
+                            copyTitle: '{{"Arbelera kopiatzen"|trans}} ',
+                            copySuccess: {
+                                _: '%d {{ "Errenkada kopiatu dira arbelera" |trans }} ',
+                            }
+                        }
+                        
+                    }
+                });
+            
+                // Refilter the table
+                $('#min, #max').on('change', function () {
+                    table.draw();
+                });
+            }
+        });
+  </script>   

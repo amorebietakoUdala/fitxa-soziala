@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gaitasuna{% endblock %}
+
+{% block body %}
+    <h1>Gaitasuna</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ gaitasuna.id }}</td>
+            </tr>
+            <tr>
+                <th>Gaitasuna_eu</th>
+                <td>{{ gaitasuna.gaitasunaEu }}</td>
+            </tr>
+            <tr>
+                <th>Gaitasuna_es</th>
+                <td>{{ gaitasuna.gaitasunaEs }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('gaitasuna_index') }}">back to list</a>
+
+    <a href="{{ path('gaitasuna_edit', {'id': gaitasuna.id}) }}">edit</a>
+
+    {{ include('gaitasuna/_delete_form.html.twig') }}
+{% endblock %}

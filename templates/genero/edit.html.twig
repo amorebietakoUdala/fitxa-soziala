@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+{% block title %}{{"Genero"|trans }}{% endblock %}
+
+
+
+
+{% block body %}
+    <main role="main" class="container">
+    
+        <div class="row">
+            <div class="col">
+            <span class="label label-primary label-bs "><h1>"{{ "Genero" |trans}}" {{ "aukera" |trans}} </h1></span>
+            </div>
+        </div>
+    
+        <div class="row">
+            {{ include('genero/_form.html.twig') }}
+        </div>
+        <div class="row">
+            <div class="col">
+                <a href="{{ path('genero_index') }}">{{"Atzera"|trans}}</a>
+            </div>
+            <div class="col">
+                {{ include('genero/_delete_form.html.twig') }}
+            </div>
+        </div>
+    </main>
+{% endblock %}

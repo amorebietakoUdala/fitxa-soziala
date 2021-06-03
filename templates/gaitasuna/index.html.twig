@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gaitasuna index{% endblock %}
+
+{% block body %}
+  
+    
+    <main role="main" class="container">
+        
+        <div class="card">
+        
+        <div class="card-body">
+            <h5 class="card-title">"{{ "Gaitasuna" |trans}}" {{ "aukerak" |trans}}</h5>
+    
+            {% for gaitasuna in gaitasunas  %}
+            <div class="row maila0">
+                <div class="col">
+                    <span class="label label-default">{{ gaitasuna.gaitasunaEu }}</span>
+                </div>
+                <div class="col">
+                    <span class="label label-default">{{ gaitasuna.gaitasunaEs }}</span>
+                </div>
+                <div class="col-1">
+                    <span class="label label-default">
+                    <a href="{{ path('gaitasuna_edit', {'id': gaitasuna.id}) }}">{{ "Edit" |trans}}</a>
+                    </span>
+                </div>
+            </div>
+            {% else %}
+                <span class="label label-default">
+                    <td colspan="7">no records found</td>
+                </span>
+            {% endfor %}
+            
+            <div class="row">
+                <div class="col">
+                    <a href="{{ path('gaitasuna_new') }}">{{ "berria" |trans}}</a>
+                </div>
+            </div>
+        </div
+    </main>
+    
+    
+    
+    
+    
+{% endblock %}

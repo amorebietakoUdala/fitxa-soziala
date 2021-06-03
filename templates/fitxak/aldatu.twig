@@ -1,0 +1,36 @@
+
+<script>
+
+    if ( ! {{validate_error}} ) {
+        $(':input[name^="appbundle_fitxak"]').each(function( index ) {
+            $(this).attr('readonly', 'readonly');
+            $(this).attr("disabled", true); 
+        });
+        $("#save_button").attr("disabled", true); 
+        $("#save_button").hide();
+    }else{
+        $('#aldatu').bootstrapToggle('on')
+    }
+    
+    $( document ).ready(function() {        
+        $('#aldatu').change(function () {                
+            if ( $(this).prop('checked') ){                    
+                $(':input[name^="appbundle_fitxak"]').each(function( index ) {
+                    $(this).attr('readonly', 'readonly');
+                    $(this).attr("disabled", true); 
+                });
+            }else{
+                $(':input[name^="appbundle_fitxak"]').each(function( index ) {
+                    $(this).removeAttr('readonly');
+                    $(this).removeAttr("disabled");
+                });
+                $("#save_button").removeAttr("disabled");
+                $("#save_button").show();
+            }
+        });
+        
+    });
+</script>
+
+    
+    

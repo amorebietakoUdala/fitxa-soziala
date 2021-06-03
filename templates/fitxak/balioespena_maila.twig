@@ -1,0 +1,103 @@
+
+    <script>
+    
+        function update_balioespena_label(){
+            var tree_txt="";
+            $('.balioespena-input').filter( "input:checked" ).each( function( index ) {
+                tree_txt += "  +  " +  $("label[for='appbundle_fitxak_balioespena_" + $(this).val() + "']").text();
+            }).promise().done( function(){
+                if(tree_txt){
+                    $('#hbutBalioespena').html(tree_txt);
+                }else{
+                    $('#hbutBalioespena').html("---");
+                }
+            });
+        
+        }
+        function update_beste_balioespena(){
+            var show_beste_balioespena=false;
+            var non=null;
+            
+            $('.balioespena-input').filter("input[data-bestebalioespena=b1]").filter("input:checked").each(function( index ) {
+                show_beste_balioespena=true
+                non=this
+            }).promise().done( function(){
+                if (show_beste_balioespena){
+                    $('.beste_balioespena').show();
+                    $("#beste_balioespena1").appendTo( $(non).parent() );
+                }else{
+                    $('.beste_balioespena').hide();
+                }
+            });
+        }
+                
+        
+        function balioespen_maila_bakarra( checked_id, checked_parent, lvl, is_checked  ){
+            var maila_honetan_bakarra_list=[]
+            $('.balioespena-input').filter("input[data-parent="+checked_parent+"]" ).filter("input[data-mailanbakarra=b1]").filter("input:checked").each(function( index ) {
+                    maila_honetan_bakarra_list.push( $(this).val() );
+            });
+            if ( maila_honetan_bakarra_list.length == 0  || ! is_checked ) return
+
+            if (maila_honetan_bakarra_list.indexOf(checked_id) >= 0) {
+                $('.balioespena-input').filter("input[data-parent="+checked_parent+"]" ).filter("input:checked").each(function( index ) {
+                    if ( $( this).val() != checked_id ){
+                        $( this).prop('checked', false );
+                        $( this).trigger('change');
+                    }
+                });
+            }else{
+                $('.balioespena-input').filter("input[data-parent="+checked_parent+"]" ).filter("input[data-mailanbakarra=b1]").filter("input:checked").each(function( index ) {
+                    if ( $( this).val() != checked_id ){
+                        $(this).prop('checked', false);
+                        $(this).trigger('change');
+                    }
+                });
+            }
+        }
+    
+        $( document ).ready(function() {
+            
+            update_beste_balioespena();
+            update_balioespena_label();
+            
+            $('.balioespena-input').change(function () {
+            
+                                
+                var checked_id=$( this).val();
+                var checked_parent=$( this).data("parent")
+                var checked_tree=$( this).data("tree")
+                var checked_lvl=$( this).data("lvl")
+                var is_checked=$(this).is(":checked")
+                
+                var checked_mailanbakarra=$( this).data("mailanbakarra")
+                           
+                if ( $(this).is(":checked") ) {
+                    if (checked_parent){
+                        $('#appbundle_fitxak_balioespena_'+checked_parent).filter("input:not(:checked)").each(function( index ) {
+                            $( this).prop('checked', true);
+                            $( this).trigger('change');
+                        });
+                        
+                    }
+                    $('.balioespena-input').filter( "input[data-tree != "+checked_tree+" ]" ).filter("input:checked").each(function( index ) {
+                        $(this).prop('checked', false);
+                        $(this).trigger('change');
+                    }).promise().done( function(){
+                        if(checked_parent) balioespen_maila_bakarra( checked_id, checked_parent, checked_lvl, is_checked  );
+                    });
+                    
+                }else{
+                    $('.balioespena-input').filter( "input[data-parent="+checked_id+"]" ).filter("input:checked").each(function( index ) {
+                        $(this).prop('checked', false);
+                        $(this).trigger('change');
+                        
+                    })
+                }
+                                
+                update_balioespena_label();
+                update_beste_balioespena();
+            }); 
+        });
+            
+    </script>

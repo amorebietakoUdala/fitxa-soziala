@@ -1,0 +1,26 @@
+<?php
+
+namespace App\Form;
+
+use App\Entity\Bizikidetza;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
+class BizikidetzaType extends AbstractType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            ->add('bizikidetza_eu')
+            ->add('bizikidetza_es')
+        ;
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'data_class' => Bizikidetza::class,
+        ]);
+    }
+}

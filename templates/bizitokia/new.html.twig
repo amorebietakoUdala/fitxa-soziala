@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Bizitokia{% endblock %}
+
+{% block body %}
+    <h1>Create new Bizitokia</h1>
+
+    {{ include('bizitokia/_form.html.twig') }}
+
+    <a href="{{ path('bizitokia_index') }}">{{"Atzera"|trans}}</a>
+{% endblock %}

@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+{% block title %}Edit Fitxak{% endblock %}
+
+{% block body %}
+    <main role="main" class="container">
+        <h1>{{ 'Fitxa  aldatu' | trans | capitalize  }}</h1>
+        
+        
+        <div class="row">
+            <div class="col-2" >
+                {{"Sortua"|trans| capitalize}} : <span class="label label-default">{{fitxak.created|date('Y-m-d') }}</span>
+            </div>
+            <div class="col-2" >
+                {{"Eguneratua"|trans| capitalize}} : <span class="label label-default">{{fitxak.updated|date('Y-m-d') }}</span>
+            </div>
+            <div class="col-5" >
+                {{"Erabiltzailea"|trans| capitalize}} : <span class="label label-default">{{fitxak.erabiltzailea }}</span>
+            </div>
+            <div class="col-1 hidden-print" >
+               <button class="btn" onclick="inprimatu()"><i class="bi bi-printer"></i></button>
+            </div>
+            
+            {% if is_granted('IS_AUTHENTICATED_FULLY') and  ( is_granted('ROLE_ADMIN')  or fitxak.erabiltzailea == app.user.username ) %}
+            <div class="col hidden-print" >
+                <input id="aldatu" class="aldatu" type="checkbox" checked data-toggle="toggle" data-off='<i class="bi bi-eye"></i>' data-on='<i class="bi bi-pencil"></i>' />
+            </div>
+            <div class="col hidden-print" >
+                {{ include('fitxak/_delete_form.html.twig') }}
+            </div>
+            {% endif %}
+        </div>
+        
+                
+        <div class="row">
+            {{ include('fitxak/_form.html.twig') }}
+        </div>
+    </main>
+{% endblock %}
+
+
+{% block stylesheets %}
+ {{ parent() }}
+<link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<link id="bsdp-css" href="https://unpkg.com/bootstrap-datepicker@1.9.0/dist/css/bootstrap-datepicker3.min.css" rel="stylesheet">
+
+
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    
+    <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-datepicker@1.9.0/dist/locales/bootstrap-datepicker.es.min.js" charset="UTF-8"></script>
+    <script src="https://unpkg.com/bootstrap-datepicker@1.9.0/dist/locales/bootstrap-datepicker.eu.min.js" charset="UTF-8"></script>
+    
+    {{ include('fitxak/aldatu.twig', { "validate_error": validateError }) }}
+    
+    {{ include('fitxak/nazio_maila.twig') }}
+    {{ include('fitxak/errolda_maila.twig') }}
+    {{ include('fitxak/arrazoia_maila.twig') }}
+    {{ include('fitxak/balioespena_maila.twig') }}
+    {{ include('fitxak/eragile_maila.twig') }}
+    
+    {{ include('fitxak/herria_maila.twig',  {'new': 'false'}) }}
+    {{ include('fitxak/estatua_maila.twig') }}
+    
+    {{ include('fitxak/datak.twig') }}
+    
+    <script>
+        function inprimatu() {
+            window.print();
+        }
+    
+    </script>
+
+
+{% endblock %}
+
+

@@ -1,0 +1,74 @@
+
+    <script>
+    
+        function update_errolda_label(){
+            var tree_txt="";
+            $('.errolda-input').filter( "input:checked" ).each( function( index ) {
+                tree_txt += "  +  " +  $("label[for='appbundle_fitxak_errolda_" + $(this).val() + "']").text();
+            }).promise().done( function(){
+                if(tree_txt){
+                    $('#hbutErrolda').html(tree_txt);
+                }else{
+                    $('#hbutErrolda').html("---");
+                }
+            });
+        
+        }
+        
+        function update_errolda_data(){
+            var show_errolda_data=false;
+            var non=null;
+                        
+            $('.errolda-input').filter("input[data-erroldadata=b1]").filter("input:checked").each(function( index ) {
+                show_errolda_data=true
+                non=this
+            }).promise().done( function(){
+                if (show_errolda_data){                    
+                    $('#errolda_data1').show();                    
+                    $("#errolda_data1").appendTo( $(non).parent() );
+                }else{
+                    $('#errolda_data1').hide();
+                }
+            });
+        }
+        
+    
+        $( document ).ready(function() {
+            var show_estatua=false;
+            
+            update_errolda_data();
+            update_errolda_label();
+            
+            $('.errolda-input').change(function () {
+                
+                var cheched_id=$( this).val();
+                var cheched_parent=$( this).data("parent")
+                var cheched_tree=$( this).data("tree")
+                var checked_lvl=$( this).data("lvl")
+                
+                if ( $(this).is(":checked") ) {
+                    if (cheched_parent){
+                        $('#appbundle_fitxak_errolda_'+cheched_parent).each(function( index ) {
+                            $( this).prop('checked', true);
+                            $( this).trigger('change');
+                        });
+                    }
+                    $('.errolda-input').filter( "input[data-tree != "+cheched_tree+" ]" ).each(function( index ) {
+                        $( this).prop('checked', false);
+                        $( this).trigger('change');
+                    });
+                }else{
+                    $('.errolda-input').filter( "input[data-parent="+cheched_id+"]" ).each(function( index ) {
+                        $(this).prop('checked', false);
+                        $( this).trigger('change');
+                    });
+                }
+                
+                update_errolda_label();
+                update_errolda_data();
+                
+                
+            }); 
+        });
+            
+    </script>

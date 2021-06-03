@@ -1,0 +1,121 @@
+
+    <script>
+    
+        function update_arrazoia_label(){
+            var tree_txt="";
+            $('.arrazoia-input').filter( "input:checked" ).each( function( index ) {
+                tree_txt += "  +  " +  $("label[for='appbundle_fitxak_arrazoia_" + $(this).val() + "']").text();
+            }).promise().done( function(){
+                if(tree_txt){
+                    $('#hbutArrazoia').html(tree_txt);
+                }else{
+                    $('#hbutArrazoia').html("---");
+                }
+            });
+        }
+        
+        
+        function update_beste_arrazoia(){
+            var show_beste_arrazoia=false;
+            var non=null;
+            
+            $('.arrazoia-input').filter("input[data-bestearrazoia=b1]").filter("input:checked").each(function( index ) {
+                show_beste_arrazoia=true
+                non=this
+                
+            }).promise().done( function(){
+                if (show_beste_arrazoia){
+                    $('.beste_arrazoia').show();
+                    $("#beste_arrazoia1").insertAfter($(non).parent());
+                }else{
+                    $('.beste_arrazoia').hide();
+                }
+            });
+        }
+        
+        function update_beste_babeseza(){
+            var show_beste_babeseza=false;
+            var non=null;
+            
+            $('.arrazoia-input').filter("input[data-bestebabeseza=b1]").filter("input:checked").each(function( index ) {
+                show_beste_babeseza=true
+                non=this
+                
+            }).promise().done( function(){
+                if (show_beste_babeseza){
+                    $('.beste_babeseza').show();
+                    $("#beste_babeseza1").insertAfter($(non).parent());
+                }else{
+                    $('.beste_babeseza').hide();
+                }
+            });
+        }
+
+  
+        function update_beste_bazterkeria(){
+            var show_beste_bazterkeria=false;
+            var non=null;
+            
+            $('.arrazoia-input').filter("input[data-bestebazterkeria=b1]").filter("input:checked").each(function( index ) {
+                show_beste_bazterkeria=true
+                non=this
+                
+            }).promise().done( function(){
+                if (show_beste_bazterkeria){
+                    $('.beste_bazterkeria').show();
+                    $("#beste_bazterkeria1").insertAfter($(non).parent());
+                }else{
+                    $('.beste_bazterkeria').hide();
+                }
+            });
+        }
+
+        
+        
+        
+        
+        
+        
+        $( document ).ready(function() {
+            
+            update_beste_arrazoia();
+            update_arrazoia_label();
+            update_beste_babeseza();
+            update_beste_bazterkeria();
+            
+            
+            $('.arrazoia-input').change(function () {
+                
+                update_beste_arrazoia();
+                update_beste_babeseza();
+                update_beste_bazterkeria();
+            
+                var cheched_id=$( this).val();
+                var cheched_parent=$( this).data("parent")
+                var cheched_tree=$( this).data("tree")
+                var checked_lvl=$( this).data("lvl")
+                                
+                if ( $(this).is(":checked") ) {
+                    if (cheched_parent){
+                        $('#appbundle_fitxak_arrazoia_'+cheched_parent).each(function( index ) {
+                            $( this).prop('checked', true);
+                            $( this).trigger('change');
+                        });
+                        
+                    }
+                    $('.arrazoia-input').filter( "input[data-tree != "+cheched_tree+" ]" ).each(function( index ) {
+                        $(this).prop('checked', false);
+                        $(this).trigger('change');
+                    });
+                }else{
+                    $('.arrazoia-input').filter( "input[data-parent="+cheched_id+"]" ).each(function( index ) {
+                        $(this).prop('checked', false);
+                        $(this).trigger('change');
+                    });
+                }
+                                
+                update_arrazoia_label();
+            }); 
+        });
+            
+    </script>

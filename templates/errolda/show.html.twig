@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Errolda{% endblock %}
+
+{% block body %}
+    <h1>Errolda</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ errolda.id }}</td>
+            </tr>
+            <tr>
+                <th>Maila_eu</th>
+                <td>{{ errolda.mailaEu }}</td>
+            </tr>
+            <tr>
+                <th>Maila_es</th>
+                <td>{{ errolda.mailaEs }}</td>
+            </tr>
+            <tr>
+                <th>Lft</th>
+                <td>{{ errolda.lft }}</td>
+            </tr>
+            <tr>
+                <th>Lvl</th>
+                <td>{{ errolda.lvl }}</td>
+            </tr>
+            <tr>
+                <th>Rgt</th>
+                <td>{{ errolda.rgt }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('errolda_index') }}">back to list</a>
+
+    <a href="{{ path('errolda_edit', {'id': errolda.id}) }}">edit</a>
+
+    {{ include('errolda/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+{% block title %}New Fitxak{% endblock %}
+
+{% block body %}
+
+    <main role="main" class="container">
+        
+        <h1>{{ 'Fitxa berria sortu' | trans }}</h1>
+        
+        <div class="row">            
+            {{ include('fitxak/_form.html.twig' ) }}
+        </div>
+    </main>
+    
+{% endblock %}
+
+
+{% block stylesheets %}
+ {{ parent() }}
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<link id="bsdp-css" href="https://unpkg.com/bootstrap-datepicker@1.9.0/dist/css/bootstrap-datepicker3.min.css" rel="stylesheet">
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script src="https://unpkg.com/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-datepicker@1.9.0/dist/locales/bootstrap-datepicker.es.min.js" charset="UTF-8"></script>
+    <script src="https://unpkg.com/bootstrap-datepicker@1.9.0/dist/locales/bootstrap-datepicker.eu.min.js" charset="UTF-8"></script>
+     
+    {{ include('fitxak/herria_maila.twig',  {'new': 'true'} ) }}
+    {{ include('fitxak/estatua_maila.twig') }}
+     
+    {{ include('fitxak/nazio_maila.twig') }}
+    {{ include('fitxak/errolda_maila.twig') }}
+    {{ include('fitxak/arrazoia_maila.twig') }}
+    {{ include('fitxak/balioespena_maila.twig') }}
+    {{ include('fitxak/eragile_maila.twig') }}
+    
+    
+    {{ include('fitxak/datak.twig') }}
+    
+        
+{% endblock %}

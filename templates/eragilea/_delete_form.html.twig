@@ -1,0 +1,4 @@
+<form method="post" action="{{ path('eragilea_delete', {'id': eragilea.id}) }}" onsubmit="return confirm('{{"Seguru elementu hau ezabatu nahi duzula"|trans }}?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ eragilea.id) }}">
+    <button class="btn">{{"Ezabatu"|trans}}</button>
+</form>

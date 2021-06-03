@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{"Bizikidetza"|trans}}{% endblock %}
+
+{% block body %}
+    <main role="main" class="container">
+    
+        <div class="row">
+            <div class="col">
+            <span class="label label-primary label-bs "><h1>"{{"Bizikidetza"|trans}}" {{ "aukera" |trans}} </h1></span>
+            </div>
+        </div>
+        
+        <div class="row">
+            {{ include('bizikidetza/_form.html.twig') }}
+        </div>
+        <div class="row">
+            <div class="col">
+                <a href="{{ path('bizikidetza_index') }}">{{"Atzera"|trans}}</a>
+            </div>
+            <div class="col">
+                {{ include('bizikidetza/_delete_form.html.twig') }}
+            </div>
+        </div>
+    <main>
+{% endblock %}

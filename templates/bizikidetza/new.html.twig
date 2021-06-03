@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Bizikidetza{% endblock %}
+
+{% block body %}
+    <h1>Create new Bizikidetza</h1>
+
+    {{ include('bizikidetza/_form.html.twig') }}
+
+    <a href="{{ path('bizikidetza_index') }}">{{"Atzera"|trans}}</a>
+{% endblock %}

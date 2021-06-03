@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nazionalitatea{% endblock %}
+
+{% block body %}
+    <h1>Nazionalitatea</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ nazionalitatea.id }}</td>
+            </tr>
+            <tr>
+                <th>Maila_eu</th>
+                <td>{{ nazionalitatea.mailaEu }}</td>
+            </tr>
+            <tr>
+                <th>Maila_es</th>
+                <td>{{ nazionalitatea.mailaEs }}</td>
+            </tr>
+            <tr>
+                <th>Lft</th>
+                <td>{{ nazionalitatea.lft }}</td>
+            </tr>
+            <tr>
+                <th>Lvl</th>
+                <td>{{ nazionalitatea.lvl }}</td>
+            </tr>
+            <tr>
+                <th>Rgt</th>
+                <td>{{ nazionalitatea.rgt }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('nazionalitatea_index') }}">back to list</a>
+
+    <a href="{{ path('nazionalitatea_edit', {'id': nazionalitatea.id}) }}">edit</a>
+
+    {{ include('nazionalitatea/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,96 @@
+edit: editar
+'Seguru elementu hau ezabatu nahi duzula': 'Seguro que deseas eleiminar el elemento'
+Gorde: Guardar
+Arrazoia: Demanda
+aukera: opcion
+Atzera: Volver
+aukerak: opciones
+Edit: Editar
+berria: Nuevo
+Balioespena: 'Valoración Profesional'
+Bizikidetza: ' Grupo de convivencia'
+Bizitokia: Domicilio
+Ezabatu: Eliminar
+'Eskaera nondik datorren aukerak': 'Opciones para Origen de la demanda'
+'Eskaera nondik dator': 'Origen de la demanda'
+Errolda: Empadronamiento
+'KONTUZ!!! Seguru fitxa ezabatu nahi duzula?': 'ATENCIÓN!!! Seguru que desea eliminar la ficha?'
+Abisuak: Notas
+'Fitxa sozialen zerrenda': 'Lista fichas sociales'
+Noizkoak: Fecha
+'Dokumentu zenbakia': 'Numero documento'
+Oharrak: Observaciones
+Eguneratua: Actualizado
+Erabiltzailea: 'Trabajador social'
+'Berria sortu': 'Crear nuevo'
+'Fitxa berria aldatu': 'Modificar fitxa nueva'
+Aldatu: Modificar
+'Ezin aldatu': 'No es posible editar.'
+'Fitxa berria sortu': 'Crear nueva ficha'
+'000 Identifikazioa': '000 Identificación'
+'Errolda egoera': 'Situación de Empadronamiento'
+'Pertsona erabiltzaileak duen eskaera eta hasierako beharren balorazioa: GZES, jarduera-eremu orokorrak': 'Demanda persona usuaria y Valoración Inicial de necesidades: Ámbitos generales de actuación SVSS'
+'Harremanak izateko eta komunikatzeko oinarrizko abileziak': ' Habilidades básicas de interacción y comunicación'
+Utzi: Anular
+Gaitasuna: Habilidades
+Genero: Genero
+Jarduerak: 'Demanda persona usuaria y Valoración Inicial de necesidades: Ámbitos generales de actuación SVSS'
+Nazionalitatea: 'Nacionalidad y lugar de nacimiento'
+'Nazionalitatea aukerak': ' Opcopnes para Nacionalidad y lugar de nacimiento'
+'Bigarren mailako taulak': 'Tablas secundarias'
+Eragilea: 'Origen demanda'
+Hizkuntza: Idioma
+Izena: Nombre
+Abizena: Apellidos
+'dok. mota': 'tipo doc.'
+Zenbakia: numero
+'001  Fecha nacimiento': '001  Fecha nacimiento'
+Herria: '002 Municipio Residencia'
+'003  Sexo': '003  Sexo'
+"004\tNazionalitatea eta jaioterriko lekua": '004 Nacionalidad y lugar de nacimiento'
+Estatua: Pais
+'005  Domicilio, Marco físico para la residencia y alojamiento Habitual': '005  Domicilio, Marco físico para la residencia y alojamiento Habitual'
+'006  Grupo de convivencia': '006  Grupo de convivencia'
+"3.1 (6)\tErrolda": '3.1 (6) Empadronamiento'
+Errolda-data: 'Fecha de empadronamiento'
+'Arretarako pertsona erabiltzaileak duen arrazoia: Jarduera-eremu orokorrak': 'Motivo de atención de la persona usuaria: Ámbitos generales de actuación'
+'Beste arrazoia': 'Otras situaciones de dependencia'
+'Beste babeseza': 'Otras situaciones deprotección'
+'Beste bazterkeria': 'Otras situaciones de exclusión'
+'Balioespen Profesionala: Jarduera-eremu orokorrak': 'Valoración Profesional: Ámbitos generales de actuación'
+'Beste balioespena': Otros
+"9.A.1 (15)\tHarremanak izateko eta komunikatzeko oinarrizko abileziak": '9.A.1 (15) Habilidades básicas de interacción y comunicación'
+'Beste gaixotasun': 'Salud mental'
+'Beste eragile': Otros
+Prozesatzen...: Procesando...
+'Erakutsi _MENU_ erregistro': 'Mostrar _MENU_ registro'
+'Ez da emaitzarik aurkitu': 'No se han encontrado resultados'
+'Taula hontan ez dago inongo datu erabilgarririk': 'En esta tabla no se ha encontrado datos'
+'_START_ -etik _END_ -erako erregistroak erakusten, guztira _TOTAL_ erregistro': 'Registros desde _START_ hasta  _END_ , total  _TOTAL_ registros'
+'0tik 0rako erregistroak erakusten, guztira 0 erregistro': ''
+'(guztira _MAX_ erregistro iragazten)': '( Filtrando  _MAX_ registros)'
+'Aurkitu:': 'Buscar:'
+Abiarazten...: Iniciando...
+Lehena: Primero
+Azkena: Ultimo
+Hurrengoa: Seguiente
+Aurrekoa: Anterior
+': Zutabea beheranzko eran ordenatzeko aktibatu': ' : Activar la columna en orden descendente'
+izena: nombre
+Eragiketak: Operaciones
+'Ez dago fitxarik': 'No hay fichas'
+Sortua: Creado
+asteegunak: '[ "Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab" ]'
+hilabeteak: '[ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" ]'
+Atera: Salir
+': Zutabea goranzko eran ordenatzeko aktibatu': ' : Activar la columna en orden ascendente'
+'Fitxa  aldatu': 'Modificar ficha'
+'kopiatu': 'copiar'
+'inprimatu': 'imprimir'
+'Arbelera kopiatzen': 'Copiando al portapapeles'
+'Errenkada kopiatu dira arbelera': 'Filas copiadas al portapapeles'
+'Eremuak aukeratu': 'Seleccionar campos'
+'Egoera': 'Estado'
+
+
+

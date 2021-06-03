@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Balioespena{% endblock %}
+
+{% block body %}
+    <h1>Balioespena</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ balioespena.id }}</td>
+            </tr>
+            <tr>
+                <th>Maila_eu</th>
+                <td>{{ balioespena.mailaEu }}</td>
+            </tr>
+            <tr>
+                <th>Maila_es</th>
+                <td>{{ balioespena.mailaEs }}</td>
+            </tr>
+            <tr>
+                <th>Lft</th>
+                <td>{{ balioespena.lft }}</td>
+            </tr>
+            <tr>
+                <th>Lvl</th>
+                <td>{{ balioespena.lvl }}</td>
+            </tr>
+            <tr>
+                <th>Rgt</th>
+                <td>{{ balioespena.rgt }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('balioespena_index') }}">back to list</a>
+
+    <a href="{{ path('balioespena_edit', {'id': balioespena.id}) }}">edit</a>
+
+    {{ include('balioespena/_delete_form.html.twig') }}
+{% endblock %}

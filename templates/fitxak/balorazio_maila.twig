@@ -1,0 +1,34 @@
+
+    <script>
+        $( document ).ready(function() {
+            $('#appbundle_fitxak_balorazioa1').change(function () {
+            
+                var path="{{ path('listBalorazioa2OfBalorazioa1', {'balorazioa1id': -9999} ) }}";
+                var balorazioaSelector = $(this);
+                path=path.replace("-9999", balorazioaSelector.val() )
+                
+                $.ajax({
+                    url: path,
+                    type: "GET",
+                    dataType: "JSON",
+                    success: function (balorazioa2s) {
+                        var balorazioa2Select = $("#appbundle_fitxak_balorazioa2");
+
+                        // Remove current options
+                        balorazioa2Select.html('');
+                        
+                        // Empty value ...
+                        //balorazioa2Select.append('<option value>...</option>');
+                        
+                        $.each(balorazioa2s, function (key, balorazioa2) {
+                            balorazioa2Select.append('<option value="' + balorazioa2.id + '">' + balorazioa2.balorazioa2 + '</option>');
+                        });
+                    },
+                    error: function (err) {
+                        alert("An error ocurred while loading data ...");
+                    }
+                });
+            }); 
+        });
+            
+    </script>

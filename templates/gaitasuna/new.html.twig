@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Gaitasuna{% endblock %}
+
+{% block body %}
+    <h1>Create new Gaitasuna</h1>
+
+    {{ include('gaitasuna/_form.html.twig') }}
+
+    <a href="{{ path('gaitasuna_index') }}">{{"Atzera"|trans}}</a>
+{% endblock %}

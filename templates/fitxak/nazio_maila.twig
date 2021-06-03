@@ -1,0 +1,71 @@
+
+    <script>
+    
+        function update_nazionalitatea_label(){
+            var tree_txt="";
+            $('.nazionalitatea-input').filter( "input:checked" ).each( function( index ) {
+                tree_txt += "  +  " +  $("label[for='appbundle_fitxak_nazionalitatea_" + $(this).val() + "']").text();
+            }).promise().done( function(){
+                if(tree_txt){
+                    $('#hbutNazionalitatea').html(tree_txt);
+                }else{
+                    $('#hbutNazionalitatea').html("---");
+                }
+            });
+        }
+        
+        function update_estatua(){
+            var show_beste_estatua=false;
+            var non=null;
+            $('.nazionalitatea-input').filter("input[data-estatua=b1]").filter("input:checked").each(function( index ) {
+                show_beste_estatua=true
+                non=this
+            }).promise().done( function(){
+                if (show_beste_estatua){
+                    $('.estatua_optional').show();                    
+                    $("#beste_estatua1").appendTo( $(non).parent() );
+                }else{
+                    $('.estatua_optional').hide();
+                }
+            });
+            
+        }
+        
+        $( document ).ready(function() {
+            var show_estatua=false;
+            
+            update_estatua()
+            update_nazionalitatea_label();
+            
+            $('.nazionalitatea-input').change(function () {
+                
+                var cheched_id=$( this).val();
+                var cheched_parent=$( this).data("parent")
+                var cheched_tree=$( this).data("tree")
+                var checked_lvl=$( this).data("lvl")
+                
+                if ( $(this).is(":checked") ) {
+                    if (cheched_parent){
+                        $('#appbundle_fitxak_nazionalitatea_'+cheched_parent).filter("input:checkbox:not(:checked)").each(function( index ) {
+                            $( this).prop('checked', true);
+                            $( this).trigger('change');
+                        });
+                    }
+                    $('.nazionalitatea-input').filter( "input[data-tree != "+cheched_tree+" ]" ).filter("input:checked").each(function( index ) {
+                        $( this).prop('checked', false);
+                        $( this).trigger('change');
+                    });
+                }else{
+                    $('.nazionalitatea-input').filter( "input[data-parent="+cheched_id+"]" ).filter("input:checked").each(function( index ) {
+                        $(this).prop('checked', false);
+                        $( this).trigger('change');
+                    });
+                }
+                                
+                update_nazionalitatea_label();
+                update_estatua()
+                
+            }); 
+        });
+            
+    </script>

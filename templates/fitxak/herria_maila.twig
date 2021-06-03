@@ -1,0 +1,11 @@
+
+<script>
+    $( document ).ready(function() {
+        $('#appbundle_fitxak_herria').select2();
+        //Amorebieta
+        if ( "{{new}}" == "true"  ) {
+            $('#appbundle_fitxak_herria').val('419');
+            $('#appbundle_fitxak_herria').trigger('change');
+        }
+    });
+</script>

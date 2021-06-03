@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Eragilea{% endblock %}
+
+{% block body %}
+
+
+
+    <main role="main" class="container">
+
+        <h1>Eragilea</h1>
+
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ eragilea.id }}</td>
+                </tr>
+                <tr>
+                    <th>Eragilea_eu</th>
+                    <td>{{ eragilea.eragileaEu }}</td>
+                </tr>
+                <tr>
+                    <th>Eragilea_es</th>
+                    <td>{{ eragilea.eragileaEs }}</td>
+                </tr>
+                <tr>
+                    <th>Lvl</th>
+                    <td>{{ eragilea.lvl }}</td>
+                </tr>
+                
+            </tbody>
+        </table>
+
+        <a href="{{ path('eragilea_index') }}">back to list</a>
+
+        <a href="{{ path('eragilea_edit', {'id': eragilea.id}) }}">edit</a>
+
+        {{ include('eragilea/_delete_form.html.twig') }}
+    
+    </main>
+    
+{% endblock %}
+

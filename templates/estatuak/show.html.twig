@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Estatuak{% endblock %}
+
+{% block body %}
+    <h1>Estatuak</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ estatuak.id }}</td>
+            </tr>
+            <tr>
+                <th>Estatua</th>
+                <td>{{ estatuak.estatua }}</td>
+            </tr>
+            <tr>
+                <th>Kodea</th>
+                <td>{{ estatuak.kodea }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('estatuak_index') }}">back to list</a>
+
+    <a href="{{ path('estatuak_edit', {'id': estatuak.id}) }}">edit</a>
+
+    {{ include('estatuak/_delete_form.html.twig') }}
+{% endblock %}

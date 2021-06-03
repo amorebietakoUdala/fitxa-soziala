@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Estatuak index{% endblock %}
+
+{% block body %}
+    <h1>Estatuak index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Estatua</th>
+                <th>Kodea</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for estatuak in estatuaks %}
+            <tr>
+                <td>{{ estatuak.id }}</td>
+                <td>{{ estatuak.estatua }}</td>
+                <td>{{ estatuak.kodea }}</td>
+                <td>
+                    <a href="{{ path('estatuak_show', {'id': estatuak.id}) }}">show</a>
+                    <a href="{{ path('estatuak_edit', {'id': estatuak.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('estatuak_new') }}">Create new</a>
+{% endblock %}

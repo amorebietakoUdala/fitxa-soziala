@@ -1,0 +1,128 @@
+
+    <script>
+    
+        function update_eragile_label(){
+            var tree_txt="";
+            $('.eragilea-input').filter( "input:checked" ).each( function( index ) {
+                tree_txt += "  +  " +  $("label[for='appbundle_fitxak_eragilea_" + $(this).val() + "']").text();
+            }).promise().done( function(){
+                if(tree_txt){
+                    $('#hbutEragilea').html(tree_txt);
+                }else{
+                    $('#hbutEragilea').html("---");
+                }
+            });
+        
+        }
+    
+        function update_beste_eragileak(){
+            
+            var show_beste_besteeragile=false;
+            var non_eragile=null;
+            
+            $('.eragilea-input').filter("input[data-besteeragile=b1]").filter("input:checked").each(function( index ) {
+                show_beste_besteeragile=true
+                non_eragile=this
+                
+            }).promise().done( function(){
+                if (show_beste_besteeragile){
+                    $('.beste_eragilea').show();
+                    $("#beste_eragilea1").insertAfter($(non_eragile).parent());
+                }else{
+                    $('.beste_eragilea').hide();
+                }
+            });
+            
+            
+            
+            var show_beste_gaixotasun=false;
+            var non_gaixotasun=null;
+            
+            $('.eragilea-input').filter("input[data-bestegaixotasun=b1]").filter("input:checked").each(function( index ) {
+                show_beste_gaixotasun=true
+                non_gaixotasun=this
+                
+            }).promise().done( function(){
+                if (show_beste_gaixotasun){
+                    $('.beste_gaixotasun').show();
+                    $("#beste_gaixotasun1").insertAfter($(non_gaixotasun).parent());
+                }else{
+                    $('.beste_gaixotasun').hide();
+                }
+            });
+            
+            
+            /*if ( $('.eragilea-input').filter("input[data-bestegaixotasun=b1]").filter("input:checked").length > 0 ){
+                $('.beste_gaixotasun').show();
+            }else{
+                $('.beste_gaixotasun').hide();
+            }*/
+        }
+        
+        
+        
+        
+         function update_beste_arrazoia(){
+            var show_beste_arrazoia=false;
+            var non=null;
+            
+            $('.arrazoia-input').filter("input[data-bestearrazoia=b1]").filter("input:checked").each(function( index ) {
+                show_beste_arrazoia=true
+                non=this
+                
+            }).promise().done( function(){
+                if (show_beste_arrazoia){
+                    $('.beste_arrazoia').show();
+                    $("#beste_arrazoia1").insertAfter($(non).parent());
+                }else{
+                    $('.beste_arrazoia').hide();
+                }
+            });
+        }
+        
+        
+        
+        
+        
+        
+    
+        $( document ).ready(function() {
+            var show_eragilea=false;
+            var show_gaixotasuna=false;
+            
+            update_beste_eragileak();
+            update_eragile_label();
+            
+            $('.eragilea-input').change(function () {
+                var cheched_id=$( this).val();
+                var cheched_parent=$( this).data("parent")
+                var cheched_tree=$( this).data("tree")
+                var checked_lvl=$( this).data("lvl")
+                
+                if ( $(this).is(":checked") ) {
+                    if (cheched_parent){
+                        $('#appbundle_fitxak_eragilea_'+cheched_parent).each(function( index ) {
+                            $( this).prop('checked', true);
+                            $( this).trigger('change');
+                        });
+                    }
+                    $('.eragilea-input').filter( "input[data-tree != "+cheched_tree+" ]" ).filter( "input:checked" ).each(function( index ) {
+                        $( this).prop('checked', false);
+                        $( this).trigger('change');
+                    });
+                
+                }else{
+                    $('.eragilea-input').filter( "input[data-parent="+cheched_id+"]" ).filter( "input:checked" ).each(function( index ) {
+                        $(this).prop('checked', false);
+                        $( this).trigger('change');
+                    });
+                }
+                
+                update_beste_eragileak();
+                
+                update_eragile_label()
+                
+            }); 
+        });
+            
+    </script>

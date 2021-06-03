@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Estatuak{% endblock %}
+
+{% block body %}
+    <h1>Create new Estatuak</h1>
+
+    {{ include('estatuak/_form.html.twig') }}
+
+    <a href="{{ path('estatuak_index') }}">back to list</a>
+{% endblock %}

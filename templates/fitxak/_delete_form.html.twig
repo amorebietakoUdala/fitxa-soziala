@@ -1,0 +1,4 @@
+<form method="post" action="{{ path('fitxak_delete', {'id': fitxak.id}) }}" onsubmit="return confirm('{{"KONTUZ!!! Seguru fitxa ezabatu nahi duzula?"|trans }}' );">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ fitxak.id) }}">
+    <button class="btn"><i class="bi bi-trash"></i></button>
+</form>

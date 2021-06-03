@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bizitokia index{% endblock %}
+
+{% block body %}
+    
+    <main role="main" class="container">
+        
+        <div class="card">
+        
+        <div class="card-body">
+            <h5 class="card-title">"{{ "Bizitokia" |trans}}" {{ "aukerak" |trans}}</h5>
+    
+            {% for bizitokia in bizitokias  %}
+            <div class="row maila0">
+                <div class="col">
+                    <span class="label label-default">{{ bizitokia.bizitokiaEu }}</span>
+                </div>
+                <div class="col">
+                    <span class="label label-default">{{ bizitokia.bizitokiaEs }}</span>
+                </div>
+                <div class="col-1">
+                    <span class="label label-default">
+                    <a href="{{ path('bizitokia_edit', {'id': bizitokia.id}) }}">{{ "Edit" |trans}}</a>
+                    </span>
+                </div>
+            </div>
+            {% else %}
+                <span class="label label-default">
+                    <td colspan="7">no records found</td>
+                </span>
+            {% endfor %}
+            
+            <div class="row">
+                <div class="col">
+                    <a href="{{ path('bizitokia_new') }}">{{ "berria" |trans}}</a>
+                </div>
+            </div>
+        </div
+    </main>
+    
+{% endblock %}

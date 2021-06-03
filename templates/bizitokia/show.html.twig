@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bizitokia{% endblock %}
+
+{% block body %}
+    <h1>Bizitokia</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ bizitokium.id }}</td>
+            </tr>
+            <tr>
+                <th>Bizitokia_eu</th>
+                <td>{{ bizitokium.bizitokiaEu }}</td>
+            </tr>
+            <tr>
+                <th>Bizitokia_es</th>
+                <td>{{ bizitokium.bizitokiaEs }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('bizitokia_index') }}">back to list</a>
+
+    <a href="{{ path('bizitokia_edit', {'id': bizitokium.id}) }}">edit</a>
+
+    {{ include('bizitokia/_delete_form.html.twig') }}
+{% endblock %}

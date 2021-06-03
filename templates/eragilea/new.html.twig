@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+{% block title %}{{ "Eskaera nondik dator" |trans}} {{ "berria" |trans}} {% endblock %}
+
+{% block body %}
+    <main role="main" class="container">
+        <h1>"{{ "Eskaera nondik dator" |trans}}" {{ "berria" |trans}} </h1>
+
+        {{ include('eragilea/_form.html.twig') }}
+
+        <a href="{{ path('eragilea_index') }}">{{"Atzera"|trans}}</a>
+    </main>
+{% endblock %}

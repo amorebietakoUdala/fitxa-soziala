@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+{% block title %}{{ "Jarduerak" |trans}} {{ "berria" |trans}} {% endblock %}
+
+{% block body %}
+    <main role="main" class="container">
+        <h1>"{{ "Jarduerak" |trans}}" {{ "berria" |trans}} </h1>
+
+        {{ include('jarduerak/_form.html.twig') }}
+
+        <a href="{{ path('jarduerak_index') }}">{{"Atzera"|trans}}</a>
+    </main>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Herria{% endblock %}
+
+{% block body %}
+    <h1>Herria</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ herrium.id }}</td>
+            </tr>
+            <tr>
+                <th>Herria</th>
+                <td>{{ herrium.herria }}</td>
+            </tr>
+            <tr>
+                <th>Kodea</th>
+                <td>{{ herrium.kodea }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('herria_index') }}">back to list</a>
+
+    <a href="{{ path('herria_edit', {'id': herrium.id}) }}">edit</a>
+
+    {{ include('herria/_delete_form.html.twig') }}
+{% endblock %}
