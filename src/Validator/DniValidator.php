@@ -15,11 +15,27 @@ class DniValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, Dni::class);
         }
 
-        if (null === $value || '' === $value) {
+        $dokumentu_mota   = $this->context->getRoot()->get('dokumentu_mota')->getData();
+        
+        $jaiotze_data   = $this->context->getRoot()->get('jaiotze_data')->getData();
+        
+        $dni_noiz1 = clone $jaiotze_data;
+        $dni_noiz=$dni_noiz1->modify ('+14 year')->getTimestamp();
+        
+        $now=time();
+        
+        if ( $dni_noiz >= $now && ( null === $value || '' === $value ) ) {
+            if ( null === $value ) $value="";
             return;
         }
         
-        $dokumentu_mota   = $this->context->getRoot()->get('dokumentu_mota')->getData();
+        if ( $dni_noiz <  $now && ( null === $value || '' === $value ) ) {
+            $this->context->buildViolation($constraint->message)
+                ->setParameter('{{ string }}', "" )
+                ->addViolation();
+            return ;
+        }
+        
         
         if ( stristr( $dokumentu_mota, "pasap" ) !== false ) return;
         

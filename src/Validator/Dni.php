@@ -9,5 +9,5 @@ use Symfony\Component\Validator\Constraint;
  */
 class Dni extends Constraint
 {
-    public $message = 'The string "{{ string }}" contains an illegal DNI.';
+    public $message = 'DNI edo Pasaporte okerra "{{ string }}" .';
 }

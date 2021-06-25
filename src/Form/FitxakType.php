@@ -64,6 +64,8 @@ class FitxakType extends AbstractType
                 )) 
             ->add('dokumentu_zenbakia', null, array(
                 'label'=>'Zenbakia',
+                'required' => false,
+                'empty_data' => ''
                 ))
             ->add('jaiotze_data', null, array(
                 'label'=>'001  Fecha nacimiento',

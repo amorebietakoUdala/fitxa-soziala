@@ -28,7 +28,7 @@ class FitxakController extends AbstractController
 
     public function __construct(Security $security)
     {
-        
+
         $this->security = $security;
     }
 
@@ -37,7 +37,6 @@ class FitxakController extends AbstractController
      */
     public function index(Request $request, FitxakRepository $fitxakRepository): Response
     {
-               
         return $this->render('fitxak/index.html.twig', [
             'fitxaks' => $fitxakRepository->zerrenda()
         ]);
@@ -46,10 +45,10 @@ class FitxakController extends AbstractController
     /**
      * @Route("/new", name="fitxak_new", methods={"GET","POST"})
      */
-    public function new( Request $request): Response
+    public function new(Request $request): Response
     {
         $locale = $request->getLocale();
-        
+
         $fitxak = new Fitxak();
         $form = $this->createForm(FitxakType::class, $fitxak);
         $form->handleRequest($request);
@@ -85,10 +84,8 @@ class FitxakController extends AbstractController
     {
 
         $em = $this->getDoctrine()->getManager();
-        
+
         $form = $this->createForm(FitxakType::class, $fitxak);
-
-
 
         $form->handleRequest($request);
 

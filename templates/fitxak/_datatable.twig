@@ -49,7 +49,7 @@
             // DataTables initialisation
             if ( $('#fitxak_table td').length > 1 ){
                 var table = $('#fitxak_table').DataTable( {
-                
+                   "order": [[ 0, "desc" ]],
                     dom: 'Bfrtip',
                     buttons: [
                         { extend: 'print', exportOptions: { columns: ':visible' } },

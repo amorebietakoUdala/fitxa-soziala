@@ -91,6 +91,7 @@ Atera: Salir
 'Errenkada kopiatu dira arbelera': 'Filas copiadas al portapapeles'
 'Eremuak aukeratu': 'Seleccionar campos'
 'Egoera': 'Estado'
+'DNI edo Pasaporte okerra "{{ string }}" .': 'Número de DNI o Pasaporte erroneo "{{ string }}" .'
 
 
 
