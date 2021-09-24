@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\EgoeraRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Intl\Locale;
 
 /**
  * @ORM\Entity(repositoryClass=EgoeraRepository::class)
@@ -55,11 +56,12 @@ class Egoera
 
         return $this;
     }
-    
-    public function __toString() {
-        if(isset($GLOBALS['request']) && $GLOBALS['request']) {
-            $locale = $GLOBALS['request']->getLocale(); 
-        }else{
+
+    public function __toString()
+    {
+        if (isset($GLOBALS['request']) && $GLOBALS['request']) {
+            $locale = $GLOBALS['request']->getLocale();
+        } else {
             $locale = Locale::getDefault();
         }
         if ($locale == 'es') return $this->egoera_es;
