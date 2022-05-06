@@ -1,6 +1,8 @@
 
 
-{{ form_start(form) }}
+{{ form_start(form, {'attr' : {
+    'class' : 'w-100'
+}}) }}
 
     <div class="row">
         <div class="col">
@@ -36,7 +38,7 @@
                             {{ form_label(form.abizena) }}
                             {{ form_widget(form.abizena) }}
                         </div>
-                        <div class="col-1">
+                        <div class="col-2">
                             {{ form_label(form.dokumentu_mota) }}
                             {{ form_widget(form.dokumentu_mota) }}
                         </div>
@@ -44,6 +46,8 @@
                             {{ form_label(form.dokumentu_zenbakia) }}
                             {{ form_widget(form.dokumentu_zenbakia) }}
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="col-2">
                             {{ form_label(form.jaiotze_data) }}
                             {{ form_widget(form.jaiotze_data)  }}
