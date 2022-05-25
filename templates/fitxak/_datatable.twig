@@ -6,8 +6,7 @@
             function( settings, data, dataIndex ) {
                 var min = minDate.val();
                 var max = maxDate.val();
-                var date = new Date( data[5] );
-                        
+                var date = new Date( data[6] );
                 if (
                     ( min === null && max === null ) ||
                     ( min === null && date <= max ) ||
@@ -21,7 +20,6 @@
         );
         
         $(document).ready(function() {
-                    
             // Create date inputs
             minDate = new DateTime($('#min'), {
                 format: 'YYYY-MM-DD',
@@ -31,10 +29,7 @@
                     months:   {{"hilabeteak"|trans|raw}},
                     weekdays: {{"asteegunak"|trans|raw}}
                 }
-
-                
             });
-            
             maxDate = new DateTime($('#max'), {
                 format: 'YYYY-MM-DD',
                 i18n: {
@@ -44,7 +39,6 @@
                     weekdays: {{"asteegunak"|trans|raw}}
                 }
             });
-            
         
             // DataTables initialisation
             if ( $('#fitxak_table td').length > 1 ){
@@ -59,11 +53,7 @@
                         { extend: 'copy', exportOptions: { columns: ':visible' } },
                         'colvis'
                     ],
-                    
-                    
-                
                     language: {
-                    
                         "sProcessing":     "{{"Prozesatzen..."|trans }}",
                         "sLengthMenu":     "{{"Erakutsi _MENU_ erregistro"|trans }}",
                         "sZeroRecords":    "{{"Ez da emaitzarik aurkitu"|trans }}",
@@ -93,7 +83,6 @@
                                 _: '%d {{ "Errenkada kopiatu dira arbelera" |trans }} ',
                             }
                         }
-                        
                     }
                 });
             
