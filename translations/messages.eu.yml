@@ -58,6 +58,7 @@ Errolda-data: Errolda-data
 'Beste babeseza': 'Beste babes eza egoera'
 'Beste bazterkeria': 'Beste bazterkeria egoera'
 'Balioespen Profesionala: Jarduera-eremu orokorrak': 'Balioespen Profesionala: Jarduera-eremu orokorrak'
+'Balioespen Profesionala': 'Balioespen Profesionala'
 'Beste balioespena': 'Beste batzuk'
 "9.A.1 (15)\tHarremanak izateko eta komunikatzeko oinarrizko abileziak": "9.A.1 (15)\tHarremanak izateko eta komunikatzeko oinarrizko abileziak"
 'Beste gaixotasun': 'Gaixotasun mentala'
@@ -92,7 +93,7 @@ Atera: Atera
 'Eremuak aukeratu': 'Eremuak aukeratu'
 'Egoera': 'Egoera'
 'DNI edo Pasaporte okerra "{{ string }}" .': 'DNI edo Pasaporte zenbaki okerra "{{ string }}" .'
-
+btn.search: 'Bilatu' 
 
 
 

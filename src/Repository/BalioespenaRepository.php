@@ -32,6 +32,14 @@ class BalioespenaRepository extends NestedTreeRepository
         ;
     }
 
+    public function balioespenaLevelQB(int $level = 0) {
+        $qb  = $this->createQueryBuilder('b')
+            ->andWhere('b.lvl = :level')
+            ->setParameter('level', $level);
+
+        return $qb;
+    }
+
     // /**
     //  * @return Balioespena[] Returns an array of Balioespena objects
     //  */

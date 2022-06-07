@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Fitxak;
-
+use App\Form\FitxakSearchFormType;
 use App\Form\FitxakType;
 use App\Repository\FitxakRepository;
 use App\Repository\OharrakRepository;
@@ -33,12 +33,23 @@ class FitxakController extends AbstractController
     }
 
     /**
-     * @Route("/", name="fitxak_index", methods={"GET"})
+     * @Route("/", name="fitxak_index", methods={"GET","POST"})
      */
     public function index(Request $request, FitxakRepository $fitxakRepository): Response
     {
-        return $this->render('fitxak/index.html.twig', [
-            'fitxaks' => $fitxakRepository->zerrenda()
+        $form = $this->createForm(FitxakSearchFormType::class, null, [
+
+        ]);
+        $fitxaks = $fitxakRepository->zerrenda();
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $fitxaks = $fitxakRepository->findFitxakByCriteria($data);
+        }
+
+        return $this->renderForm('fitxak/index.html.twig', [
+            'fitxaks' => $fitxaks,
+            'form' => $form,
         ]);
     }
 

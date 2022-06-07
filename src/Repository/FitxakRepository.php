@@ -28,6 +28,21 @@ class FitxakRepository extends ServiceEntityRepository
         ;
     }
 
+    public function findFitxakByCriteria(array $criteria) {
+        $qb = $this->createQueryBuilder('f')
+            ->innerJoin('f.balioespena', 'b');
+            if ( null !== $criteria['egoera']) {
+                $qb->andWhere("f.egoera = :egoera")
+                ->setParameter('egoera', $criteria['egoera']);
+            }
+            if ( null !== $criteria['balioespena']) {
+                $qb->andWhere("b.id = :balioespena")
+                ->setParameter('balioespena', $criteria['balioespena']);
+            }
+        $result = $qb->getQuery()->getResult();
+        return $result;
+    }
+
     // /**
     //  * @return Fitxak[] Returns an array of Fitxak objects
     //  */

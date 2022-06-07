@@ -58,6 +58,7 @@ Errolda-data: 'Fecha de empadronamiento'
 'Beste babeseza': 'Otras situaciones deprotección'
 'Beste bazterkeria': 'Otras situaciones de exclusión'
 'Balioespen Profesionala: Jarduera-eremu orokorrak': 'Valoración Profesional: Ámbitos generales de actuación'
+'Balioespen Profesionala': 'Valoración Profesional'
 'Beste balioespena': Otros
 "9.A.1 (15)\tHarremanak izateko eta komunikatzeko oinarrizko abileziak": '9.A.1 (15) Habilidades básicas de interacción y comunicación'
 'Beste gaixotasun': 'Salud mental'
@@ -92,6 +93,6 @@ Atera: Salir
 'Eremuak aukeratu': 'Seleccionar campos'
 'Egoera': 'Estado'
 'DNI edo Pasaporte okerra "{{ string }}" .': 'Número de DNI o Pasaporte erroneo "{{ string }}" .'
-
+btn.search: 'Buscar' 
 
 

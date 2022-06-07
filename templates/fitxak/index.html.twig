@@ -17,76 +17,77 @@
 {% block body %}
     <main role="main" class="container">
         <div class="row">
-        <div class="col">
-            <h1><i class="bi bi-list"></i>{{ 'Fitxa sozialen zerrenda' | trans }}</h1>
+            <div class="col">
+                <h1><i class="bi bi-list"></i>{{ 'Fitxa sozialen zerrenda' | trans }}</h1>
+            </div>
+            <div class="col" style="text-align: right;">
+                <h1><a href="{{ path('fitxak_new') }}"><i class="bi bi-plus-circle"></i></a></h1>
+            </div>
         </div>
-        <div class="col" style="text-align: right;">
-            <h1><a href="{{ path('fitxak_new') }}"><i class="bi bi-plus-circle"></i></a></h1>
-        </div>
-    </div>
     
-    <div class="row">
-        <div class="col" style="text-align: right;">
-            <span>{{"Noizkoak"|trans}}
-            <input type="text" id="min" name="min"> >>  <input type="text" id="max" name="max">
+        <div class="row">
+            <div class="col">
+                {{ include('fitxak/_searchForm.html.twig') }}
+            </div>
         </div>
-    </div>
-    
 
-    <table id="fitxak_table"  class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>{{"Egoera"|trans|capitalize}}</th>
-                <th>{{"izena"|trans|capitalize}}</th>
-                <th>{{"Abizena"|trans|capitalize}}</th>
-                <th>{{"Dokumentu zenbakia"|trans|capitalize }}</th>
-                
-                <th>{{"Oharrak"|trans|capitalize }}</th>
-                <th>{{"Eguneratua"|trans|capitalize }}</th>
-                <th>{{"Erabiltzailea" |trans|capitalize }}</th>
-                
-                
-                <th>{{"Eragiketak" |trans|capitalize }}</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for fitxak in fitxaks %}
-            <tr>
-                <td>{{ fitxak.id }}</td>
-                 <td>{{ fitxak.egoera }}</td>
-                <td>{{ fitxak.izena }}</td>
-                <td>{{ fitxak.abizena }}</td>
-                <td>{{ fitxak.dokumentuZenbakia }}</td>
-                
-                <td class="textlimit" >{{ fitxak.oharrak }}</td>
-                <td>{{ fitxak.updated ? fitxak.updated|date('Y-m-d') : '' }}</td>
-                <td>{{ fitxak.erabiltzailea }} </td>
-                <td>
-                    <div class="row">
-                        
-                        {% if is_granted('IS_AUTHENTICATED_FULLY') and  ( is_granted('ROLE_ADMIN')  or fitxak.erabiltzailea == app.user.username ) %}
-                        <a class="btn" role="button" href="{{ path('fitxak_edit', {'id': fitxak.id}) }}"><i class="bi bi-pencil"></i></a>
-                        {{ include('fitxak/_delete_form.html.twig') }}
-                        {% else %}
-                        <a class="btn" role="button" href="{{ path('fitxak_edit', {'id': fitxak.id}) }}"><i class="bi bi-eye"></i></a>
-                        {% endif %}
-                    </div>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">{{ "Ez dago fitxarik" | trans |capitalize }}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+        <div class="row">
+            <div class="col" style="text-align: right;">
+                <span>{{"Noizkoak"|trans}}
+                <input type="text" id="min" name="min"> >>  <input type="text" id="max" name="max">
+            </div>
+        </div>
 
+        <table id="fitxak_table"  class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>{{"Egoera"|trans|capitalize}}</th>
+                    <th>{{"izena"|trans|capitalize}}</th>
+                    <th>{{"Abizena"|trans|capitalize}}</th>
+                    <th>{{"Dokumentu zenbakia"|trans|capitalize }}</th>
+                    
+                    <th>{{"Oharrak"|trans|capitalize }}</th>
+                    <th>{{"Eguneratua"|trans|capitalize }}</th>
+                    <th>{{"Erabiltzailea" |trans|capitalize }}</th>
+                    
+                    
+                    <th>{{"Eragiketak" |trans|capitalize }}</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for fitxak in fitxaks %}
+                <tr>
+                    <td>{{ fitxak.id }}</td>
+                    <td>{{ fitxak.egoera }}</td>
+                    <td>{{ fitxak.izena }}</td>
+                    <td>{{ fitxak.abizena }}</td>
+                    <td>{{ fitxak.dokumentuZenbakia }}</td>
+                    
+                    <td class="textlimit" >{{ fitxak.oharrak }}</td>
+                    <td>{{ fitxak.updated ? fitxak.updated|date('Y-m-d') : '' }}</td>
+                    <td>{{ fitxak.erabiltzailea }} </td>
+                    <td>
+                        <div class="row">
+                            
+                            {% if is_granted('IS_AUTHENTICATED_FULLY') and  ( is_granted('ROLE_ADMIN')  or fitxak.erabiltzailea == app.user.username ) %}
+                            <a class="btn" role="button" href="{{ path('fitxak_edit', {'id': fitxak.id}) }}"><i class="bi bi-pencil"></i></a>
+                            {{ include('fitxak/_delete_form.html.twig') }}
+                            {% else %}
+                            <a class="btn" role="button" href="{{ path('fitxak_edit', {'id': fitxak.id}) }}"><i class="bi bi-eye"></i></a>
+                            {% endif %}
+                        </div>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3">{{ "Ez dago fitxarik" | trans |capitalize }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
     </main>
-    
 {% endblock %}
-
-
 
 {% block javascripts %}
     {{ parent() }}
