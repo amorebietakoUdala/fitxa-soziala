@@ -95,5 +95,7 @@ Atera: Atera
 'DNI edo Pasaporte okerra "{{ string }}" .': 'DNI edo Pasaporte zenbaki okerra "{{ string }}" .'
 btn.search: 'Bilatu' 
 
+fromDate: "Noiztik"
+toDate: "Nora"
 
 

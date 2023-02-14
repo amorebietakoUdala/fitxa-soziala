@@ -2,11 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\Balioespena;
+use App\Entity\Egoera;
 use App\Entity\Fitxak;
 use App\Form\FitxakSearchFormType;
 use App\Form\FitxakType;
 use App\Repository\FitxakRepository;
 use App\Repository\OharrakRepository;
+use DateTime;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,35 +25,43 @@ use Symfony\Component\Security\Core\Security;
 /**
  * @Route("/{_locale<%supported_locales%>}/fitxak")
  */
-class FitxakController extends AbstractController
+class FitxakController extends BaseController
 {
 
     private $security;
+    private FitxakRepository $fitxakRepository;
+    private EntityManagerInterface $em;
 
-    public function __construct(Security $security)
+    public function __construct(Security $security, FitxakRepository $fitxakRepository, EntityManagerInterface $em)
     {
 
         $this->security = $security;
+        $this->fitxakRepository = $fitxakRepository;
+        $this->em = $em;
     }
 
     /**
      * @Route("/", name="fitxak_index", methods={"GET","POST"})
      */
-    public function index(Request $request, FitxakRepository $fitxakRepository): Response
+    public function index(Request $request): Response
     {
-        $form = $this->createForm(FitxakSearchFormType::class, null, [
+        $this->loadQueryParameters($request);
+        $filters = $this->preloadFilter();
+        $form = $this->createForm(FitxakSearchFormType::class, $filters, [
 
         ]);
-        $fitxaks = $fitxakRepository->zerrenda();
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
-            $fitxaks = $fitxakRepository->findFitxakByCriteria($data);
+            $filters = $form->getData();
+            if ( isset($filters['toDate']) && $filters['toDate'] !== null ) {
+                $filters['toDate'] = DateTime::createFromFormat('Y-m-d H:i:s', ($filters['toDate'])->format('Y-m-d'). ' 23:59:59' );
+            }
+            $this->queryParams['page'] = 0;
         }
-
-        return $this->renderForm('fitxak/index.html.twig', [
+        $fitxaks = $this->fitxakRepository->findFitxakByCriteria($filters);
+        return $this->render('fitxak/index.html.twig', [
             'fitxaks' => $fitxaks,
-            'form' => $form,
+            'form' => $form->createView(),
         ]);
     }
 
@@ -58,16 +70,13 @@ class FitxakController extends AbstractController
      */
     public function new(Request $request): Response
     {
-        $locale = $request->getLocale();
-
         $fitxak = new Fitxak();
         $form = $this->createForm(FitxakType::class, $fitxak);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($fitxak);
-            $entityManager->flush();
+            $this->em->persist($fitxak);
+            $this->em->flush();
 
             return $this->redirectToRoute('fitxak_index');
         }
@@ -81,8 +90,9 @@ class FitxakController extends AbstractController
     /**
      * @Route("/{id}", name="fitxak_show", methods={"GET"})
      */
-    public function show(Fitxak $fitxak): Response
+    public function show(Request $request, Fitxak $fitxak): Response
     {
+        $this->loadQueryParameters($request);
         return $this->render('fitxak/show.html.twig', [
             'fitxak' => $fitxak,
         ]);
@@ -93,15 +103,12 @@ class FitxakController extends AbstractController
      */
     public function edit(Request $request, Fitxak $fitxak): Response
     {
-
-        $em = $this->getDoctrine()->getManager();
-
+        $this->loadQueryParameters($request);
         $form = $this->createForm(FitxakType::class, $fitxak);
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $this->em->flush();
 
             return $this->redirectToRoute('fitxak_index');
         }
@@ -123,12 +130,40 @@ class FitxakController extends AbstractController
      */
     public function delete(Request $request, Fitxak $fitxak): Response
     {
+        $returnUrl = $request->get('returnUrl');
         if ($this->isCsrfTokenValid('delete' . $fitxak->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($fitxak);
-            $entityManager->flush();
+            $this->em->remove($fitxak);
+            $this->em->flush();
         }
 
-        return $this->redirectToRoute('fitxak_index');
+        return $this->redirect($returnUrl);
     }
+
+    private function preloadFilter() {
+        $params = [];
+        foreach ($this->queryParams as $key => $value) {
+            if ( $key !== 'page' && $key !== 'pageSize' && $key !== 'sortName' && $key !== 'sortOrder' && $key !== 'returnUrl' ) {
+                if ( $key === 'egoera') {
+                    $egoera = $this->em->getRepository(Egoera::class)->find($value);
+                    $params[$key] = $egoera;
+                } elseif ( $key === 'balioespena' ) {
+                    $balioespena = $this->em->getRepository(Balioespena::class)->find($value);
+                    $params[$key] = $balioespena;
+                }
+                elseif ( $key === 'fromDate' ) {
+                    $date = DateTime::createFromFormat('Y-m-d', $value);
+                    $params[$key] = $date;
+                }
+                elseif ( $key === 'toDate' ) {
+                    $date = DateTime::createFromFormat('Y-m-d H:i:s', $value. ' 23:59:59');
+                    $params[$key] = $date;
+                }
+                else {
+                    $params[$key] = $value;
+                }
+            }
+        }
+        return $params;
+    }
+
 }
