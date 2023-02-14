@@ -1,0 +1,43 @@
+<table id="fitxak_table" class="table" data-display-start="{{ pageSize * page }}" data-page-length="{{ pageSize }}" data-order="[[ {{ sortName }}, &quot;{{ sortOrder }}&quot; ]]">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>{{"Egoera"|trans|capitalize}}</th>
+            <th>{{"izena"|trans|capitalize}}</th>
+            <th>{{"Abizena"|trans|capitalize}}</th>
+            <th>{{"Dokumentu zenbakia"|trans|capitalize }}</th>
+            <th>{{"Oharrak"|trans|capitalize }}</th>
+            <th>{{"Eguneratua"|trans|capitalize }}</th>
+            <th>{{"Erabiltzailea" |trans|capitalize }}</th>
+            <th>{{"Eragiketak" |trans|capitalize }}</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for fitxak in fitxaks %}
+        <tr>
+            <td>{{ fitxak.id }}</td>
+            <td>{{ fitxak.egoera }}</td>
+            <td>{{ fitxak.izena }}</td>
+            <td>{{ fitxak.abizena }}</td>
+            <td>{{ fitxak.dokumentuZenbakia }}</td>
+            <td class="textlimit" >{{ fitxak.oharrak }}</td>
+            <td>{{ fitxak.updated ? fitxak.updated|date('Y-m-d') : '' }}</td>
+            <td>{{ fitxak.erabiltzailea }} </td>
+            <td>
+                <div class="row">
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') and  ( is_granted('ROLE_ADMIN')  or fitxak.erabiltzailea == app.user.username ) %}
+                        <a class="btn js-edit" role="button" href="{{ path('fitxak_edit', {'id': fitxak.id}) }}"><i class="bi bi-pencil"></i></a>
+                        {{ include('fitxak/_delete_form.html.twig') }}
+                    {% else %}
+                        <a class="btn js-edit" role="button" href="{{ path('fitxak_edit', {'id': fitxak.id}) }}"><i class="bi bi-eye"></i></a>
+                    {% endif %}
+                </div>
+            </td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="3">{{ "Ez dago fitxarik" | trans |capitalize }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

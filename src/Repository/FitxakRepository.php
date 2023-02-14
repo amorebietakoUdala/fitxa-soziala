@@ -31,13 +31,25 @@ class FitxakRepository extends ServiceEntityRepository
     public function findFitxakByCriteria(array $criteria) {
         $qb = $this->createQueryBuilder('f')
             ->innerJoin('f.balioespena', 'b');
-            if ( null !== $criteria['egoera']) {
+            if ( isset($criteria['egoera']) && $criteria['egoera'] !== null) {
                 $qb->andWhere("f.egoera = :egoera")
                 ->setParameter('egoera', $criteria['egoera']);
             }
-            if ( null !== $criteria['balioespena']) {
+            if ( isset($criteria['balioespena']) && $criteria['balioespena'] !== null ) {
                 $qb->andWhere("b.id = :balioespena")
                 ->setParameter('balioespena', $criteria['balioespena']);
+            }
+            if ( isset($criteria['fromDate']) && $criteria['fromDate'] !== null ) {
+                $qb->andWhere("f.updated >= :fromDate")
+                ->setParameter('fromDate', $criteria['fromDate']);
+            }
+            if ( isset($criteria['toDate']) && $criteria['toDate'] !== null ) {
+                $qb->andWhere("f.updated <= :toDate")
+                ->setParameter('toDate', $criteria['toDate']);
+            }
+            if ( isset($criteria['erabiltzailea']) && $criteria['erabiltzailea'] !== null ) {
+                $qb->andWhere("f.erabiltzailea = :erabiltzailea")
+                ->setParameter('erabiltzailea', $criteria['erabiltzailea']);
             }
         $result = $qb->getQuery()->getResult();
         return $result;

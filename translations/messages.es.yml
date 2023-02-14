@@ -95,4 +95,5 @@ Atera: Salir
 'DNI edo Pasaporte okerra "{{ string }}" .': 'Número de DNI o Pasaporte erroneo "{{ string }}" .'
 btn.search: 'Buscar' 
 
-
+fromDate: "Desde"
+toDate: "Hasta"

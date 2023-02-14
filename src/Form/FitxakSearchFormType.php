@@ -7,7 +7,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use App\Entity\Balioespena;
 use App\Entity\Egoera;
+use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 class FitxakSearchFormType extends AbstractType
 {
@@ -33,6 +35,26 @@ class FitxakSearchFormType extends AbstractType
                     return $em->balioespenaLevelQB();
                 }
             ])
+            ->add('fromDate', DateType::class, [
+                'constraints' => [
+                ],
+                'label' => 'fromDate',
+                'widget' => 'single_text',
+                'html5' => false,
+                'required' => false,
+            ])
+            ->add('toDate', DateType::class, [
+                'constraints' => [
+                ],
+                'label' => 'toDate',
+                'widget' => 'single_text',
+                'html5' => false,
+                'required' => false,
+            ])
+            ->add('erabiltzailea', null ,[
+                'label' => 'Erabiltzailea',
+                'required' => false,
+            ]);
         ;
     }
 

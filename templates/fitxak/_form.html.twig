@@ -327,7 +327,7 @@
  
     <div class="row">
         <div class="col">
-            <a class="btn" href="{{ path('fitxak_index') }}">{{ 'Utzi' | trans }}</a>
+            <a class="btn" href="{{ returnUrl is defined and not returnUrl is empty ? returnUrl : path('fitxak_index') }}">{{ 'Utzi' | trans }}</a>
         </div>
         <div class="col">
             <button id="save_button"  class="btn">{{ 'Gorde' |trans }}</button>
