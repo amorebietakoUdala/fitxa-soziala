@@ -1,10 +1,48 @@
 <script type="text/javascript">
+    function generateReturnlUrl(table, e) {
+        var info = table.page.info();
+        var order = table.order();
+        var returnUrl = "{{ absolute_url(path('fitxak_index')) }}";
+        const searchParams = new URLSearchParams({
+            page: info.page,
+            pageSize: info.length,
+            sortName: order[0][0],
+            sortOrder: order[0][1],
+        });
+        if ( $('#fitxak_search_form_egoera') != null && $('#fitxak_search_form_egoera').val() != null && $('#fitxak_search_form_egoera').val() != "" ) {
+            searchParams.append('egoera', $('#fitxak_search_form_egoera').val());
+        }
+        if ( $('#fitxak_search_form_balioespena') != null && $('#fitxak_search_form_balioespena').val() != null && $('#fitxak_search_form_balioespena').val() != "" ) {
+            searchParams.append('balioespena', $('#fitxak_search_form_balioespena').val());
+        }
+        if ( $('#fitxak_search_form_fromDate') != null && $('#fitxak_search_form_fromDate').val() != null && $('#fitxak_search_form_fromDate').val() != "" ) {
+            searchParams.append('fromDate', $('#fitxak_search_form_fromDate').val());
+        }
+        if ( $('#fitxak_search_form_toDate') != null && $('#fitxak_search_form_toDate').val() != null && $('#fitxak_search_form_toDate').val() != ""  ) {
+            searchParams.append('toDate', $('#fitxak_search_form_toDate').val());
+        }
+        if ( $('#fitxak_search_form_erabiltzailea') != null && $('#fitxak_search_form_erabiltzailea').val() != null && $('#fitxak_search_form_erabiltzailea').val() != ""  ) {
+            searchParams.append('erabiltzailea', $('#fitxak_search_form_erabiltzailea').val());
+        }
+        returnUrl = returnUrl + '?' + searchParams.toString();
+        return e.currentTarget.href + '?returnUrl=' + encodeURIComponent(returnUrl);
+    }
+
     $(document).ready(function() {
         $('.js-datepicker').datepicker({language: "{{ app.request.getLocale() }}", format: "yyyy-mm-dd"});            
         // DataTables initialisation
         if ( $('#fitxak_table td').length > 1 ){
             var table = $('#fitxak_table').DataTable( {
                 "order": [[ 0, "desc" ]],
+                "columnDefs": [
+                    { "width": "100px", "targets": 8 },
+//                    { "width": "10px", "targets": 1 },
+//                    { "width": "40px", "targets": 1 },
+//                    { "width": "100px", "targets": 2 },
+//                    { "width": "70px", "targets": 3 },
+//                    { "width": "70px", "targets": 4 },
+//                    { "width": "70px", "targets": 5 }
+                ],                
                 dom: 'Bfrtip',
                 buttons: [
                     { extend: 'print', exportOptions: { columns: ':visible' } },
@@ -49,32 +87,7 @@
         
             $(document).on('click', '.js-edit', function (e) {
                 e.preventDefault();
-                var info = table.page.info();
-                var order = table.order();
-                var returnUrl = "{{ absolute_url(path('fitxak_index')) }}";
-                const searchParams = new URLSearchParams({
-                    page: info.page,
-                    pageSize: info.length,
-                    sortName: order[0][0],
-                    sortOrder: order[0][1],
-                });
-                if ( $('#fitxak_search_form_egoera') != null && $('#fitxak_search_form_egoera').val() != null && $('#fitxak_search_form_egoera').val() != "" ) {
-                    searchParams.append('egoera', $('#fitxak_search_form_egoera').val());
-                }
-                if ( $('#fitxak_search_form_balioespena') != null && $('#fitxak_search_form_balioespena').val() != null && $('#fitxak_search_form_balioespena').val() != "" ) {
-                    searchParams.append('balioespena', $('#fitxak_search_form_balioespena').val());
-                }
-                if ( $('#fitxak_search_form_fromDate') != null && $('#fitxak_search_form_fromDate').val() != null && $('#fitxak_search_form_fromDate').val() != "" ) {
-                    searchParams.append('fromDate', $('#fitxak_search_form_fromDate').val());
-                }
-                if ( $('#fitxak_search_form_toDate') != null && $('#fitxak_search_form_toDate').val() != null && $('#fitxak_search_form_toDate').val() != ""  ) {
-                    searchParams.append('toDate', $('#fitxak_search_form_toDate').val());
-                }
-                if ( $('#fitxak_search_form_erabiltzailea') != null && $('#fitxak_search_form_erabiltzailea').val() != null && $('#fitxak_search_form_erabiltzailea').val() != ""  ) {
-                    searchParams.append('erabiltzailea', $('#fitxak_search_form_erabiltzailea').val());
-                }
-                returnUrl = returnUrl + '?' + searchParams.toString();
-                document.location.href=e.currentTarget.href + '?returnUrl=' + encodeURIComponent(returnUrl);
+                document.location.href=generateReturnlUrl(table, e);
             } );
             $(document).on('click', '.js-delete', function (e) {
                 e.preventDefault();
@@ -96,6 +109,12 @@
                     form.submit();                    
                 }
             } );
+            $(document).on('click', '.js-assign', function(e) {
+                e.preventDefault();
+                if ( confirm('{{"Seguru fitxaren jabe egin nahi zarela?"|trans }}' ) ) {
+                    document.location.href=generateReturnlUrl(table, e);
+                }
+            });
         }
     });
 </script>
