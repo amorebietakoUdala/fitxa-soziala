@@ -126,6 +126,19 @@ class FitxakController extends BaseController
     }
 
     /**
+     * @Route("/{id}/assign-me", name="fitxak_assign_me", methods={"GET","POST"})
+     */
+    public function assign(Request $request, Fitxak $fitxak) {
+        $this->loadQueryParameters($request);
+        /** @var User $user */
+        $user = $this->getUser();
+        $fitxak->setErabiltzailea($user->getUsername());
+        $this->em->persist($fitxak);
+        $this->em->flush();
+        return $this->redirect($request->get('returnUrl'));
+    }
+
+    /**
      * @Route("/{id}", name="fitxak_delete", methods={"POST"})
      */
     public function delete(Request $request, Fitxak $fitxak): Response

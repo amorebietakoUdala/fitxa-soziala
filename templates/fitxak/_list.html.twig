@@ -28,8 +28,10 @@
                     {% if is_granted('IS_AUTHENTICATED_FULLY') and  ( is_granted('ROLE_ADMIN')  or fitxak.erabiltzailea == app.user.username ) %}
                         <a class="btn js-edit" role="button" href="{{ path('fitxak_edit', {'id': fitxak.id}) }}"><i class="bi bi-pencil"></i></a>
                         {{ include('fitxak/_delete_form.html.twig') }}
+                        <a class="btn js-assign" role="button" href="{{ path('fitxak_assign_me', {'id': fitxak.id}) }}"><i class="bi bi-person-fill-up"></i></a>
                     {% else %}
                         <a class="btn js-edit" role="button" href="{{ path('fitxak_edit', {'id': fitxak.id}) }}"><i class="bi bi-eye"></i></a>
+                        <a class="btn js-assign" role="button" href="{{ path('fitxak_assign_me', {'id': fitxak.id}) }}"><i class="bi bi-person-fill-up"></i></a>
                     {% endif %}
                 </div>
             </td>
