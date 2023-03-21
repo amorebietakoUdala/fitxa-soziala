@@ -112,9 +112,6 @@
     "monolog/monolog": {
         "version": "2.2.0"
     },
-    "nikic/php-parser": {
-        "version": "v4.10.4"
-    },
     "php": {
         "version": "7.4"
     },
