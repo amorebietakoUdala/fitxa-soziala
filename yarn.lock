@@ -885,22 +885,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"browserslist@npm:^4.0.0":
-  version: 4.16.3
-  resolution: "browserslist@npm:4.16.3"
-  dependencies:
-    caniuse-lite: ^1.0.30001181
-    colorette: ^1.2.1
-    electron-to-chromium: ^1.3.649
-    escalade: ^3.1.1
-    node-releases: ^1.1.70
-  bin:
-    browserslist: cli.js
-  checksum: 8016901f6d13b9600487167068031745db4a13aaefff2fdc3db1a413e67f17ff73ce7db3f2217676e68e6a476844e5a30c82e2b22e7bfe342aaa8894a92aa146
-  languageName: node
-  linkType: hard
-
-"browserslist@npm:^4.21.4":
+"browserslist@npm:^4.0.0, browserslist@npm:^4.21.4":
   version: 4.21.5
   resolution: "browserslist@npm:4.21.5"
   dependencies:
@@ -990,7 +975,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"caniuse-lite@npm:^1.0.0, caniuse-lite@npm:^1.0.30001181":
+"caniuse-lite@npm:^1.0.0":
   version: 1.0.30001204
   resolution: "caniuse-lite@npm:1.0.30001204"
   checksum: 7b3ad68d6b38b4758a0b73504659b7e2bd016007d60d1b7c0913905985207753e99e5ea883d206b2260d48f07bacb96234f61e47d07b8af63de8a8e45350f073
@@ -1121,13 +1106,6 @@ __metadata:
   version: 2.9.3
   resolution: "colord@npm:2.9.3"
   checksum: 95d909bfbcfd8d5605cbb5af56f2d1ce2b323990258fd7c0d2eb0e6d3bb177254d7fb8213758db56bb4ede708964f78c6b992b326615f81a18a6aaf11d64c650
-  languageName: node
-  linkType: hard
-
-"colorette@npm:^1.2.1":
-  version: 1.2.2
-  resolution: "colorette@npm:1.2.2"
-  checksum: 69fec14ddaedd0f5b00e4bae40dc4bc61f7050ebdc82983a595d6fd64e650b9dc3c033fff378775683138e992e0ddd8717ac7c7cec4d089679dcfbe3cd921b04
   languageName: node
   linkType: hard
 
@@ -1616,13 +1594,6 @@ __metadata:
   version: 1.1.1
   resolution: "ee-first@npm:1.1.1"
   checksum: 1b4cac778d64ce3b582a7e26b218afe07e207a0f9bfe13cc7395a6d307849cfe361e65033c3251e00c27dd060cab43014c2d6b2647676135e18b77d2d05b3f4f
-  languageName: node
-  linkType: hard
-
-"electron-to-chromium@npm:^1.3.649":
-  version: 1.3.699
-  resolution: "electron-to-chromium@npm:1.3.699"
-  checksum: 3adf2694dd29ba1328ea8cd0f7e6e4bc868fb4300b675243dc9b6abc16a36cc32cfbda1668535b9aae384cc3b0cabb01d15d41f55d50894dca10846f0f6664ed
   languageName: node
   linkType: hard
 
@@ -3001,13 +2972,6 @@ __metadata:
     uuid: ^8.3.0
     which: ^2.0.2
   checksum: a75623912ec6c3fd7c4e6f1c04586adf716a3610268bdbd5adfeb95dc75a2126c10368d98051530aa0dc6fe8d72791d5033ad6dd2a5f63d009fea30f7292f07e
-  languageName: node
-  linkType: hard
-
-"node-releases@npm:^1.1.70":
-  version: 1.1.71
-  resolution: "node-releases@npm:1.1.71"
-  checksum: a6ab18069e43d70b811fa7f12b397619f2003f78ac2ed0affa30876880ca3036a191d33679d93baac166afa12a7b1b1716e13f3c82c0f0fa09e2c83db3f91faf
   languageName: node
   linkType: hard
 
