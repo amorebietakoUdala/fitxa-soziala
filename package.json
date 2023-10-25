@@ -8,6 +8,7 @@
   },
   "resolutions": {
     "jquery": "^3.6.1",
+    "postcss": "^8.4.31",
     "semver": "^7.5.2"
   }
 }
