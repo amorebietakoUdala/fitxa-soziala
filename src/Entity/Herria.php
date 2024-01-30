@@ -4,30 +4,20 @@ namespace App\Entity;
 
 use App\Repository\HerriaRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Intl\Locale;
 
-
-/**
- * @ORM\Entity(repositoryClass=HerriaRepository::class)
- */
-class Herria
+#[ORM\Entity(repositoryClass: HerriaRepository::class)]
+class Herria implements \Stringable
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $herria;
+    #[ORM\Column(type: 'string', length: 255)]
+    private ?string $herria = null;
 
-    /**
-     * @ORM\Column(type="string", length=6)
-     */
-    private $kodea;
+    #[ORM\Column(type: 'string', length: 6)]
+    private ?string $kodea = null;
 
     public function getId(): ?int
     {
@@ -57,8 +47,8 @@ class Herria
 
         return $this;
     }
-    public function __toString() {
+    public function __toString(): string {
         
-        return $this->herria;
+        return (string) $this->herria;
     }
 }

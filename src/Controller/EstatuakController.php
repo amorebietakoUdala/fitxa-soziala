@@ -10,14 +10,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/{_locale<%supported_locales%>}/estatuak")
- */
+#[Route(path: '/{_locale<%supported_locales%>}/estatuak')]
 class EstatuakController extends AbstractController
 {
-    /**
-     * @Route("/", name="estatuak_index", methods={"GET"})
-     */
+    public function __construct(private readonly \Doctrine\Persistence\ManagerRegistry $managerRegistry)
+    {
+    }
+    #[Route(path: '/', name: 'estatuak_index', methods: ['GET'])]
     public function index(EstatuakRepository $estatuakRepository): Response
     {
         return $this->render('estatuak/index.html.twig', [
@@ -25,9 +24,7 @@ class EstatuakController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/new", name="estatuak_new", methods={"GET","POST"})
-     */
+    #[Route(path: '/new', name: 'estatuak_new', methods: ['GET', 'POST'])]
     public function new(Request $request): Response
     {
         $estatuak = new Estatuak();
@@ -35,7 +32,7 @@ class EstatuakController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $this->managerRegistry->getManager();
             $entityManager->persist($estatuak);
             $entityManager->flush();
 
@@ -44,13 +41,11 @@ class EstatuakController extends AbstractController
 
         return $this->render('estatuak/new.html.twig', [
             'estatuak' => $estatuak,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="estatuak_show", methods={"GET"})
-     */
+    #[Route(path: '/{id}', name: 'estatuak_show', methods: ['GET'])]
     public function show(Estatuak $estatuak): Response
     {
         return $this->render('estatuak/show.html.twig', [
@@ -58,33 +53,29 @@ class EstatuakController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="estatuak_edit", methods={"GET","POST"})
-     */
+    #[Route(path: '/{id}/edit', name: 'estatuak_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Estatuak $estatuak): Response
     {
         $form = $this->createForm(EstatuakType::class, $estatuak);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $this->managerRegistry->getManager()->flush();
 
             return $this->redirectToRoute('estatuak_index');
         }
 
         return $this->render('estatuak/edit.html.twig', [
             'estatuak' => $estatuak,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="estatuak_delete", methods={"POST"})
-     */
+    #[Route(path: '/{id}', name: 'estatuak_delete', methods: ['POST'])]
     public function delete(Request $request, Estatuak $estatuak): Response
     {
         if ($this->isCsrfTokenValid('delete'.$estatuak->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $this->managerRegistry->getManager();
             $entityManager->remove($estatuak);
             $entityManager->flush();
         }

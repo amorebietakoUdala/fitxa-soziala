@@ -23,7 +23,7 @@ class ErroldaRepository extends NestedTreeRepository
         parent::__construct($manager, $manager->getClassMetadata(Errolda::class));
         //parent::__construct($registry, Errolda::class);
     }
-    
+
     public function treeList()
     {
         return $this->createQueryBuilder('n')
@@ -32,33 +32,4 @@ class ErroldaRepository extends NestedTreeRepository
             ->getResult()
         ;
     }
-
-    // /**
-    //  * @return Errolda[] Returns an array of Errolda objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('e')
-            ->andWhere('e.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('e.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Errolda
-    {
-        return $this->createQueryBuilder('e')
-            ->andWhere('e.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

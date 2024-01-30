@@ -18,7 +18,7 @@ class FitxakRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Fitxak::class);
     }
-    
+
     public function zerrenda()
     {
         return $this->createQueryBuilder('f')
@@ -54,33 +54,4 @@ class FitxakRepository extends ServiceEntityRepository
         $result = $qb->getQuery()->getResult();
         return $result;
     }
-
-    // /**
-    //  * @return Fitxak[] Returns an array of Fitxak objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('f')
-            ->andWhere('f.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('f.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Fitxak
-    {
-        return $this->createQueryBuilder('f')
-            ->andWhere('f.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

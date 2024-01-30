@@ -6,32 +6,22 @@ use App\Repository\DokumentuMotaRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Intl\Locale;
 
-/**
- * @ORM\Entity(repositoryClass=DokumentuMotaRepository::class)
- */
-class DokumentuMota
+#[ORM\Entity(repositoryClass: DokumentuMotaRepository::class)]
+class DokumentuMota implements \Stringable
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $mota;
+    #[ORM\Column(type: 'string', length: 255)]
+    private ?string $mota = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $mota_es;
+    #[ORM\Column(type: 'string', length: 255)]
+    private ?string $mota_es = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $mota_eu;
+    #[ORM\Column(type: 'string', length: 255)]
+    private ?string $mota_eu = null;
 
     public function getId(): ?int
     {
@@ -74,13 +64,13 @@ class DokumentuMota
         return $this;
     }
     
-    public function __toString() {
+    public function __toString(): string {
         if(isset($GLOBALS['request']) && $GLOBALS['request']) {
             $locale = $GLOBALS['request']->getLocale(); 
         }else{
             $locale = Locale::getDefault();
         }
-        if ($locale == 'es') return $this->mota_es;
-        return $this->mota_eu;
+        if ($locale == 'es') return (string) $this->mota_es;
+        return (string) $this->mota_eu;
     }
 }

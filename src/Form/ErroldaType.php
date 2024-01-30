@@ -9,21 +9,17 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ErroldaType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('parent', null, array(
-                "label"=>"Goiko maila"
-            ))
+            ->add('parent', null, ["label"=>"Goiko maila"])
             ->add('maila_eu')
             ->add('maila_es')
-            ->add('errolda_data', null, array(
-                "label"=>"Errolda data jarri behar da"
-            ))
+            ->add('errolda_data', null, ["label"=>"Errolda data jarri behar da"])
         ;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => Errolda::class,

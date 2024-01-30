@@ -20,7 +20,7 @@ class EntityTreeType extends AbstractType
     /**
      * @param OptionsResolver $resolver
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'parent_method_name' => 'getParent',
@@ -34,7 +34,7 @@ class EntityTreeType extends AbstractType
      * @param FormInterface $form
      * @param array         $options
      */
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $choices = [];
 
@@ -52,12 +52,10 @@ class EntityTreeType extends AbstractType
 
     /**
      * @param object[] $choices
-     * @param array    $options
      * @param int      $level
-     *
      * @return array
      */
-    protected function buildTreeChoices($choices, array $options, $level = 0)
+    protected function buildTreeChoices($choices, array $options, $level = 0): array
     {
 
         $result = [];
@@ -86,7 +84,7 @@ class EntityTreeType extends AbstractType
             [new ChoiceView(
                     $choice,
                     (string)$choice->getId(),
-                    str_repeat($options['prefix'], $level) . ' ' . $choice->getName(),
+                    str_repeat((string) $options['prefix'], $level) . ' ' . $choice->getName(),
                     []
                 )]
             );
@@ -104,7 +102,7 @@ class EntityTreeType extends AbstractType
     /**
      * @return string|null
      */
-    public function getParent()
+    public function getParent(): ?string
     {
         return EntityType::class;
     }

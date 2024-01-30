@@ -20,14 +20,8 @@ class NazionalitateaRepository extends NestedTreeRepository
     public function __construct(EntityManagerInterface $manager)
     {
         parent::__construct($manager, $manager->getClassMetadata(Nazionalitatea::class));
-        //parent::__construct($registry, Nazionalitatea::class);
     }
 
-    // /**
-    //  * @return Nazionalitatea[] Returns an array of Nazionalitatea objects
-    //  */
-    
-    
     public function treeList()
     {
         return $this->createQueryBuilder('n')
@@ -36,31 +30,4 @@ class NazionalitateaRepository extends NestedTreeRepository
             ->getResult()
         ;
     }
-    
-    
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('n')
-            ->andWhere('n.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('n.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Nazionalitatea
-    {
-        return $this->createQueryBuilder('n')
-            ->andWhere('n.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

@@ -9,29 +9,19 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class EragileaType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('parent', null, array(
-                "label"=>"Goiko maila"
-            ))
-            ->add('eragilea_eu', null, array(
-                "label"=>"Eragilea euskaraz "
-            ))
-            ->add('eragilea_es', null, array(
-                "label"=>"Demandante  "
-            ))
-            ->add('beste_gaixotasun', null, array(
-                "label"=>"Beste gaixotasuna  "
-            ))
-            ->add('beste_eragile', null, array(
-                "label"=>"Beste eragilea  "
-            ))
+            ->add('parent', null, ["label"=>"Goiko maila"])
+            ->add('eragilea_eu', null, ["label"=>"Eragilea euskaraz "])
+            ->add('eragilea_es', null, ["label"=>"Demandante  "])
+            ->add('beste_gaixotasun', null, ["label"=>"Beste gaixotasuna  "])
+            ->add('beste_eragile', null, ["label"=>"Beste eragilea  "])
 
         ;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => Eragilea::class,

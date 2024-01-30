@@ -9,81 +9,53 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Intl\Locale;
 
-/**
- * @Gedmo\Tree(type="nested")
- * @ORM\Table(name="balioespena")
- * use repository for handy tree functions
- * @ORM\Entity(repositoryClass="App\Repository\BalioespenaRepository")
- */
-class Balioespena
+#[Gedmo\Tree(type: 'nested')]
+#[ORM\Table(name: 'balioespena')]
+#[ORM\Entity(repositoryClass: BalioespenaRepository::class)]
+class Balioespena implements \Stringable
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $maila_eu;
+    #[ORM\Column(type: 'string', length: 255)]
+    private ?string $maila_eu = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $maila_es;
+    #[ORM\Column(type: 'string', length: 255)]
+    private ?string $maila_es = null;
 
-    /**
-     * @Gedmo\TreeLeft
-     * @ORM\Column(name="lft", type="integer")
-     */
-    private $lft;
+    #[Gedmo\TreeLeft]
+    #[ORM\Column(name: 'lft', type: 'integer')]
+    private ?int $lft = null;
 
-    /**
-     * @Gedmo\TreeLevel
-     * @ORM\Column(name="lvl", type="integer")
-     */
-    private $lvl;
+    #[Gedmo\TreeLevel]
+    #[ORM\Column(name: 'lvl', type: 'integer')]
+    private ?int $lvl = null;
 
-    /**
-     * @Gedmo\TreeRight
-     * @ORM\Column(name="rgt", type="integer")
-     */
-    private $rgt;
+    #[Gedmo\TreeRight]
+    #[ORM\Column(name: 'rgt', type: 'integer')]
+    private ?int $rgt = null;
 
-    /**
-     * @Gedmo\TreeRoot
-     * @ORM\ManyToOne(targetEntity=Balioespena::class)
-     * @ORM\JoinColumn(name="tree_root", referencedColumnName="id", onDelete="CASCADE")s)
-     */
-    private $root;
+    #[Gedmo\TreeRoot]
+    #[ORM\ManyToOne(targetEntity: Balioespena::class)]
+    #[ORM\JoinColumn(name: 'tree_root', referencedColumnName: 'id', onDelete: 'CASCADE')]
+    private ?Balioespena $root = null;
 
-    /**
-     * @Gedmo\TreeParent
-     * @ORM\ManyToOne(targetEntity=Balioespena::class, inversedBy="children")
-     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="CASCADE")
-     */
-    private $parent;
+    #[Gedmo\TreeParent]
+    #[ORM\ManyToOne(targetEntity: Balioespena::class, inversedBy: 'children')]
+    #[ORM\JoinColumn(name: 'parent_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
+    private ?Balioespena $parent = null;
 
+    #[ORM\OneToMany(targetEntity: 'Balioespena', mappedBy: 'parent')]
+    #[ORM\OrderBy(['lft' => 'ASC'])]
+    private readonly Collection $children;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Balioespena", mappedBy="parent")
-     * @ORM\OrderBy({"lft" = "ASC"})
-     */
-    private $children;
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    private ?bool $beste_balioespena = null;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    private $beste_balioespena;
-
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    private $mailan_bakarra;
-
-
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    private ?bool $mailan_bakarra = null;
 
     public function __construct()
     {
@@ -187,18 +159,6 @@ class Balioespena
         return $this;
     }
 
-    public function getBalioespena(): ?self
-    {
-        return $this->balioespena;
-    }
-
-    public function setBalioespena(?self $balioespena): self
-    {
-        $this->balioespena = $balioespena;
-
-        return $this;
-    }
-    
     public function getTitle(): ?string
     {
         if(isset($GLOBALS['request']) && $GLOBALS['request']) {
@@ -220,14 +180,14 @@ class Balioespena
         return $this->maila_eu;
     }
     
-    public function __toString() {
+    public function __toString(): string {
         if(isset($GLOBALS['request']) && $GLOBALS['request']) {
             $locale = $GLOBALS['request']->getLocale(); 
         }else{
             $locale = Locale::getDefault();
         }
-        if ($locale == 'es') return $this->maila_es;
-        return $this->maila_eu;
+        if ($locale == 'es') return (string) $this->maila_es;
+        return (string) $this->maila_eu;
     }
 
     public function getBesteBalioespena(): ?bool

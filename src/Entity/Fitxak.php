@@ -10,190 +10,106 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 use App\Validator as AcmeAssert;
-use Symfony\Component\Validator\Constraints as Assert;
 
-use Symfony\Component\Intl\Locale;
-
-
-##use App\Validator as Aa3;
-#use Symfony\Component\Validator\Constraints as Aa2;
-
-
-/**
- * @ORM\Entity(repositoryClass=FitxakRepository::class)
- */
+#[ORM\Entity(repositoryClass: FitxakRepository::class)]
 class Fitxak
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $izena;
+    #[ORM\Column(type: 'string', length: 255)]
+    private ?string $izena = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $abizena;
+    #[ORM\Column(type: 'string', length: 255)]
+    private ?string $abizena = null;
     
-    /**
-     *
-     * @AcmeAssert\Dni
-     * 
-     * @ORM\Column(type="string", length=255, nullable=true )
-     * 
-     */
-    private $dokumentu_zenbakia;
+    #[AcmeAssert\Dni]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private ?string $dokumentu_zenbakia = null;
     
-    /**
-     * @ORM\Column(type="date")
-     */
-    private $jaiotze_data;
+    #[ORM\Column(type: 'date')]
+    private ?\DateTimeInterface $jaiotze_data = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Herria::class)
-     */
-    private $herria;
+    #[ORM\ManyToOne(targetEntity: Herria::class)]
+    private ?Herria $herria = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Genero::class)
-     */
-    private $genero;
+    #[ORM\ManyToOne(targetEntity: Genero::class)]
+    private ?Genero $genero = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Estatuak::class)
-     */
-    private $estatua;
+    #[ORM\ManyToOne(targetEntity: Estatuak::class)]
+    private ?Estatuak $estatua = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Bizitokia::class)
-     */
-    private $bizitokia;
+    #[ORM\ManyToOne(targetEntity: Bizitokia::class)]
+    private ?Bizitokia $bizitokia = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Bizikidetza::class)
-     */
-    private $bizikidetza;
+    #[ORM\ManyToOne(targetEntity: Bizikidetza::class)]
+    private ?Bizikidetza $bizikidetza = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Gaitasuna::class)
-     */
-    private $gaitasuna;
+    #[ORM\ManyToOne(targetEntity: Gaitasuna::class)]
+    private ?Gaitasuna $gaitasuna = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=DokumentuMota::class)
-     */
-    private $dokumentu_mota;
+    #[ORM\ManyToOne(targetEntity: DokumentuMota::class)]
+    private ?DokumentuMota $dokumentu_mota = null;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Nazionalitatea::class)
-     */
-    private $nazionalitatea;
+    #[ORM\ManyToMany(targetEntity: Nazionalitatea::class)]
+    private Collection|array $nazionalitatea;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Errolda::class)
-     */
-    private $errolda;
+    #[ORM\ManyToMany(targetEntity: Errolda::class)]
+    private Collection|array $errolda;
 
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     */
-    private $errolda_data;
+    #[ORM\Column(type: 'date', nullable: true)]
+    private ?\DateTimeInterface $errolda_data = null;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Arrazoia::class)
-     */
-    private $arrazoia;
+    #[ORM\ManyToMany(targetEntity: Arrazoia::class)]
+    private Collection|array $arrazoia;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $beste_arrazoia;
+    #[ORM\Column(type: 'text', nullable: true)]
+    private ?string $beste_arrazoia = null;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Balioespena::class)
-     */
-    private $balioespena;
+    #[ORM\ManyToMany(targetEntity: Balioespena::class)]
+    private Collection|array $balioespena;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $beste_balioespena;
+    #[ORM\Column(type: 'text', nullable: true)]
+    private ?string $beste_balioespena = null;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Eragilea::class)
-     */
-    private $eragilea;
+    #[ORM\ManyToMany(targetEntity: Eragilea::class)]
+    private Collection|array $eragilea;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $beste_gaixotasun;
+    #[ORM\Column(type: 'text', nullable: true)]
+    private ?string $beste_gaixotasun = null;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $beste_eragile;
+    #[ORM\Column(type: 'text', nullable: true)]
+    private ?string $beste_eragile = null;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $oharrak;
+    #[ORM\Column(type: 'text', nullable: true)]
+    private ?string $oharrak = null;
 
-    
-    /**
-     * @var \DateTime $created
-     *
-     * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $created;
+    #[Gedmo\Timestampable(on: 'create')]
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    private ?\DateTimeInterface $created = null;
 
-     /**
-     * @var \DateTime $updated
-     *
-     * @Gedmo\Timestampable(on="update")
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $updated;
+    #[Gedmo\Timestampable(on: 'update')]
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    private ?\DateTimeInterface $updated = null;
 
-     /**
-     * @var \DateTime $contentChanged
-     *
-     * @ORM\Column(name="content_changed", type="datetime", nullable=true)
-     * @Gedmo\Timestampable(on="change", field={"izena", "abizena"})
-     */
-    private $contentChanged;
+    #[Gedmo\Timestampable(on: 'change', field: ["izena", "abizena"])]
+    #[ORM\Column(name: 'content_changed', type: 'datetime', nullable: true)]
+    private ?\DateTimeInterface $contentChanged = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $erabiltzailea;
+    #[ORM\Column(type: 'string', length: 255)]
+    private ?string $erabiltzailea = null;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $beste_babes_eza;
+    #[ORM\Column(type: 'text', nullable: true)]
+    private ?string $beste_babes_eza = null;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $beste_bazterkeria;
+    #[ORM\Column(type: 'text', nullable: true)]
+    private ?string $beste_bazterkeria = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Egoera::class)
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $egoera;
-    
-  
-
-    
+    #[ORM\ManyToOne(targetEntity: Egoera::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Egoera $egoera = null;
 
     public function __construct()
     {

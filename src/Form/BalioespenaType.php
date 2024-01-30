@@ -9,24 +9,18 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class BalioespenaType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('parent', null, array(
-                "label"=>"Goiko maila"
-            ))
+            ->add('parent', null, ["label"=>"Goiko maila"])
             ->add('maila_eu')
             ->add('maila_es')
-            ->add('beste_balioespena', null, array(
-                "label"=>"Beste balioespena aukera osatu behar da"
-            ))
-            ->add('mailan_bakarra', null, array(
-                "label"=>"Maila berdinean hau bakarrik egon daiteke."
-            ))
+            ->add('beste_balioespena', null, ["label"=>"Beste balioespena aukera osatu behar da"])
+            ->add('mailan_bakarra', null, ["label"=>"Maila berdinean hau bakarrik egon daiteke."])
         ;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => Balioespena::class,

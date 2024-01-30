@@ -6,27 +6,19 @@ use App\Repository\GeneroRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Intl\Locale;
 
-/**
- * @ORM\Entity(repositoryClass=GeneroRepository::class)
- */
-class Genero
+#[ORM\Entity(repositoryClass: GeneroRepository::class)]
+class Genero implements \Stringable
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=50)
-     */
-    private $genero_eu;
+    #[ORM\Column(type: 'string', length: 50)]
+    private ?string $genero_eu = null;
 
-    /**
-     * @ORM\Column(type="string", length=50)
-     */
-    private $genero_es;
+    #[ORM\Column(type: 'string', length: 50)]
+    private ?string $genero_es = null;
 
     public function getId(): ?int
     {
@@ -56,7 +48,7 @@ class Genero
 
         return $this;
     }
-    public function __toString() {
+    public function __toString(): string {
         
         if(isset($GLOBALS['request']) && $GLOBALS['request']) {
             $locale = $GLOBALS['request']->getLocale(); 
@@ -64,7 +56,7 @@ class Genero
             $locale = Locale::getDefault();
         }
 
-        if ($locale == 'es') return $this->genero_es;
-        return $this->genero_eu;
+        if ($locale == 'es') return (string) $this->genero_es;
+        return (string) $this->genero_eu;
     }
 }

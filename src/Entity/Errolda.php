@@ -11,72 +11,50 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Intl\Locale;
 
 
-/**
- * @Gedmo\Tree(type="nested")
- * @ORM\Table(name="errolda")
- * @ORM\Entity(repositoryClass=ErroldaRepository::class)
- */
-class Errolda
+#[Gedmo\Tree(type: 'nested')]
+#[ORM\Table(name: 'errolda')]
+#[ORM\Entity(repositoryClass: ErroldaRepository::class)]
+class Errolda implements \Stringable
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $maila_eu;
+    #[ORM\Column(type: 'string', length: 255)]
+    private ?string $maila_eu = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $maila_es;
+    #[ORM\Column(type: 'string', length: 255)]
+    private ?string $maila_es = null;
 
-    /**
-     * @Gedmo\TreeLeft
-     * @ORM\Column(name="lft", type="integer")
-     */
-    private $lft;
+    #[Gedmo\TreeLeft]
+    #[ORM\Column(name: 'lft', type: 'integer')]
+    private ?int $lft = null;
 
-    /**
-     * @Gedmo\TreeLevel
-     * @ORM\Column(name="lvl", type="integer")
-     */
-    private $lvl;
+    #[Gedmo\TreeLevel]
+    #[ORM\Column(name: 'lvl', type: 'integer')]
+    private ?int $lvl = null;
 
-    /**
-     * @Gedmo\TreeRight
-     * @ORM\Column(name="rgt", type="integer")
-     */
-    private $rgt;
+    #[Gedmo\TreeRight]
+    #[ORM\Column(name: 'rgt', type: 'integer')]
+    private ?int $rgt = null;
 
-    /**
-     * @Gedmo\TreeRoot
-     * @ORM\ManyToOne(targetEntity=Errolda::class)
-     * @ORM\JoinColumn(name="tree_root", referencedColumnName="id", onDelete="CASCADE")
-     */
-    private $root;
+    #[Gedmo\TreeRoot]
+    #[ORM\ManyToOne(targetEntity: Errolda::class)]
+    #[ORM\JoinColumn(name: 'tree_root', referencedColumnName: 'id', onDelete: 'CASCADE')]
+    private ?Errolda $root = null;
 
-    /**
-     * @Gedmo\TreeParent
-     * @ORM\ManyToOne(targetEntity=Errolda::class, inversedBy="children")
-     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="CASCADE")
-     */
-    private $parent;
+    #[Gedmo\TreeParent]
+    #[ORM\ManyToOne(targetEntity: Errolda::class, inversedBy: 'children')]
+    #[ORM\JoinColumn(name: 'parent_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
+    private ?Errolda $parent = null;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Errolda", mappedBy="parent")
-     * @ORM\OrderBy({"lft" = "ASC"})
-     */
-    private $children;
+    #[ORM\OneToMany(targetEntity: 'Errolda', mappedBy: 'parent')]
+    #[ORM\OrderBy(['lft' => 'ASC'])]
+    private readonly Collection $children;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    private $errolda_data;
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    private ?bool $errolda_data = null;
 
     public function __construct()
     {
@@ -200,14 +178,14 @@ class Errolda
         return $this->maila_eu;
     }
     
-    public function __toString() {
+    public function __toString(): string {
         if(isset($GLOBALS['request']) && $GLOBALS['request']) {
             $locale = $GLOBALS['request']->getLocale(); 
         }else{
             $locale = Locale::getDefault();
         }
-        if ($locale == 'es') return $this->maila_es;
-        return $this->maila_eu;
+        if ($locale == 'es') return (string) $this->maila_es;
+        return (string) $this->maila_eu;
     }
 
     public function getErroldaData(): ?bool

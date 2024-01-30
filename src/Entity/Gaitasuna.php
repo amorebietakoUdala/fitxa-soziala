@@ -7,27 +7,19 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Intl\Locale;
 
 
-/**
- * @ORM\Entity(repositoryClass=GaitasunaRepository::class)
- */
-class Gaitasuna
+#[ORM\Entity(repositoryClass: GaitasunaRepository::class)]
+class Gaitasuna implements \Stringable
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $gaitasuna_eu;
+    #[ORM\Column(type: 'string', length: 255)]
+    private ?string $gaitasuna_eu = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $gaitasuna_es;
+    #[ORM\Column(type: 'string', length: 255)]
+    private ?string $gaitasuna_es = null;
 
     public function getId(): ?int
     {
@@ -58,13 +50,13 @@ class Gaitasuna
         return $this;
     }
     
-    public function __toString() {
+    public function __toString(): string {
         if(isset($GLOBALS['request']) && $GLOBALS['request']) {
             $locale = $GLOBALS['request']->getLocale(); 
         }else{
             $locale = Locale::getDefault();
         }
-        if ($locale == 'es') return $this->gaitasuna_es;
-        return $this->gaitasuna_eu;
+        if ($locale == 'es') return (string) $this->gaitasuna_es;
+        return (string) $this->gaitasuna_eu;
     }
 }

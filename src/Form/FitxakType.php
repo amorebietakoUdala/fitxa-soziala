@@ -18,39 +18,19 @@ use Symfony\Component\Security\Core\Security;
 
 class FitxakType extends AbstractType
 {
-    private Security $security;
-    
-    public function __construct(Security $security)
+    public function __construct(private readonly \Symfony\Bundle\SecurityBundle\Security $security)
     {
-        $this->security = $security;
     }
     
-    public function buildForm( FormBuilderInterface $builder, array $options)
+    public function buildForm( FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('egoera', null, array(
-                'label'=>'Egoera',
-                ))
-             ->add('izena', null, array(
-                'label'=>'Izena',
-                ))
-            ->add('abizena', null, array(
-                'label'=>'Abizena',
-                ))
-            ->add('dokumentu_mota', null, array(
-                'label'=>'dok. mota',
-                )) 
-            ->add('dokumentu_zenbakia', null, array(
-                'label'=>'Zenbakia',
-                'required' => false,
-                'empty_data' => ''
-                ))
-            ->add('jaiotze_data', null, array(
-                'label'=>'001  Fecha nacimiento',
-                'html5'=>false,
-                'widget'=>"single_text",
-                'input_format'=>'yyyy-mm-dd'
-                ))
+            ->add('egoera', null, ['label'=>'Egoera'])
+             ->add('izena', null, ['label'=>'Izena'])
+            ->add('abizena', null, ['label'=>'Abizena'])
+            ->add('dokumentu_mota', null, ['label'=>'dok. mota']) 
+            ->add('dokumentu_zenbakia', null, ['label'=>'Zenbakia', 'required' => false, 'empty_data' => ''])
+            ->add('jaiotze_data', null, ['label'=>'001  Fecha nacimiento', 'html5'=>false, 'widget'=>"single_text", 'input_format'=>'yyyy-mm-dd'])
             //->add('herria', null, array('label'=>'002  Municipio Residencia' ))
             
             ->add('herria', EntityType::class, [
@@ -58,9 +38,7 @@ class FitxakType extends AbstractType
                 'multiple' => false,
                 'expanded' => false,
                 'choice_label' => "herria",
-                'query_builder' => function( EntityRepository $er ){
-                    return $er->createQueryBuilder('h')->orderBy('h.herria', 'ASC');
-                },
+                'query_builder' => fn(EntityRepository $er) => $er->createQueryBuilder('h')->orderBy('h.herria', 'ASC'),
                 'label' => 'Herria', 
                 'required' => true,
                 'attr' => ['class'=>"select2_input"],
@@ -68,19 +46,15 @@ class FitxakType extends AbstractType
 
             ])
             
-            ->add('genero', null, array('label' => '003  Sexo' ))
+            ->add('genero', null, ['label' => '003  Sexo'])
             ->add('nazionalitatea', EntityType::class,  [
                 'label' => '004	Nazionalitatea eta jaioterriko lekua',
-                'class' => "App\Entity\Nazionalitatea",
+                'class' => \App\Entity\Nazionalitatea::class,
                 'multiple' => true,
                 'expanded' => true,
-                'choice_attr' => function($choice, $key, $value) {
-                    return ['class' => 'nazionalitatea-input maila'.$choice->getLvl(), "data-estatua"=>"b".$choice->getEstatua(), "data-tree"=>$choice->getRoot()->getId(), "data-parent"=>$choice->getParentID(), "data-lvl" => $choice->getLvl() ];
-                },
+                'choice_attr' => fn($choice, $key, $value) => ['class' => 'nazionalitatea-input maila'.$choice->getLvl(), "data-estatua"=>"b".$choice->getEstatua(), "data-tree"=>$choice->getRoot()->getId(), "data-parent"=>$choice->getParentID(), "data-lvl" => $choice->getLvl() ],
                 'attr' => [ 'class' => 'nazionalitatea_tree'],
-                'query_builder' => function(  EntityRepository $er) {
-                    return $er->createQueryBuilder('n')->add('orderBy','n.root ASC,  n.lft + n.lvl  ASC, n.id ASC');
-                }
+                'query_builder' => fn(EntityRepository $er) => $er->createQueryBuilder('n')->add('orderBy','n.root ASC,  n.lft + n.lvl  ASC, n.id ASC')
                 
                 ])
             //->add('estatua')
@@ -90,9 +64,7 @@ class FitxakType extends AbstractType
                 'multiple' => false,
                 'expanded' => false,
                 'choice_label' => "estatua",
-                'query_builder' => function(  EntityRepository $er ){
-                    return $er->createQueryBuilder('h')->orderBy('h.estatua', 'ASC');
-                },
+                'query_builder' => fn(EntityRepository $er) => $er->createQueryBuilder('h')->orderBy('h.estatua', 'ASC'),
                 'label' => 'Estatua', 
                 'required' => true,
                 'attr' => ['class'=>"select2_input"],
@@ -100,37 +72,26 @@ class FitxakType extends AbstractType
 
             ])
             
-            ->add('bizitokia', null, array('label'=>'005  Domicilio, Marco físico para la residencia y alojamiento Habitual' ))
-            ->add('bizikidetza', null, array('label'=>'006  Grupo de convivencia' ))
+            ->add('bizitokia', null, ['label'=>'005  Domicilio, Marco físico para la residencia y alojamiento Habitual'])
+            ->add('bizikidetza', null, ['label'=>'006  Grupo de convivencia'])
             
             ->add('errolda', EntityType::class,  [
                 'label' => '3.1 (6)	Errolda',
-                'class' => "App\Entity\Errolda",
+                'class' => \App\Entity\Errolda::class,
                 'multiple' => true,
                 'expanded' => true,
-                'choice_attr' => function($choice, $key, $value) {
-                    return ['class' => 'errolda-input maila'.$choice->getLvl(), "data-erroldadata"=>"b".$choice->getErroldaData(), "data-tree"=>$choice->getRoot()->getId(), "data-parent"=>$choice->getParentID(), "data-lvl" => $choice->getLvl() ];
-                },
+                'choice_attr' => fn($choice, $key, $value) => ['class' => 'errolda-input maila'.$choice->getLvl(), "data-erroldadata"=>"b".$choice->getErroldaData(), "data-tree"=>$choice->getRoot()->getId(), "data-parent"=>$choice->getParentID(), "data-lvl" => $choice->getLvl() ],
                 'attr' => [ 'class' => 'errolda_tree'],
-                'query_builder' => function(  EntityRepository $er) {
-                    return $er->createQueryBuilder('n')->add('orderBy','n.root ASC,  n.lft + n.lvl  ASC, n.id ASC');
-                }
+                'query_builder' => fn(EntityRepository $er) => $er->createQueryBuilder('n')->add('orderBy','n.root ASC,  n.lft + n.lvl  ASC, n.id ASC')
                 
                 ])
-            ->add('errolda_data', null, array(
-                'label'=>'Errolda-data',
-                'html5'=>false,
-                'widget'=>"single_text",
-                'input_format'=>'yyyy-mm-dd'
-                ))
+            ->add('errolda_data', null, ['label'=>'Errolda-data', 'html5'=>false, 'widget'=>"single_text", 'input_format'=>'yyyy-mm-dd'])
             ->add('arrazoia', null,  [
                 'label' => 'Arretarako pertsona erabiltzaileak duen arrazoia: Jarduera-eremu orokorrak',
-                'class' => "App\Entity\Arrazoia",
+                'class' => \App\Entity\Arrazoia::class,
                 'multiple' => true,
                 'expanded' => true,
-                'choice_attr' => function($choice, $key, $value) {
-                    return ['class' => 'arrazoia-input maila'.$choice->getLvl(), "data-bestearrazoia"=>"b".$choice->getBesteArrazoia(),  "data-bestebabeseza"=>"b".$choice->getBesteBabeseza(),  "data-bestebazterkeria"=>"b".$choice->getBesteBazterkeria(),  "data-tree"=>$choice->getRoot()->getId(), "data-parent"=>$choice->getParentID(), "data-lvl" => $choice->getLvl() ];
-                },
+                'choice_attr' => fn($choice, $key, $value) => ['class' => 'arrazoia-input maila'.$choice->getLvl(), "data-bestearrazoia"=>"b".$choice->getBesteArrazoia(),  "data-bestebabeseza"=>"b".$choice->getBesteBabeseza(),  "data-bestebazterkeria"=>"b".$choice->getBesteBazterkeria(),  "data-tree"=>$choice->getRoot()->getId(), "data-parent"=>$choice->getParentID(), "data-lvl" => $choice->getLvl() ],
                 'attr' => [ 'class' => 'arrazoia_tree'],
                 'query_builder' => function(  EntityRepository $er) {
                     return $er->createQueryBuilder('n')->add('orderBy','n.root ASC,  n.lft + n.lvl  ASC, n.id ASC');
@@ -142,16 +103,12 @@ class FitxakType extends AbstractType
             ->add('beste_bazterkeria')
             ->add('balioespena', null,  [
                 'label' => 'Balioespen Profesionala: Jarduera-eremu orokorrak',
-                'class' => "App\Entity\Balioespena",
+                'class' => \App\Entity\Balioespena::class,
                 'multiple' => true,
                 'expanded' => true,
-                'choice_attr' => function($choice, $key, $value) {    
-                    return ['class' => 'balioespena-input maila'.$choice->getLvl(),  "data-bestebalioespena"=>"b".$choice->getBesteBalioespena(), "data-tree"=>$choice->getRoot()->getId(), "data-parent"=>$choice->getParentID(), "data-lvl" => $choice->getLvl(), "data-mailanbakarra" =>  "b".$choice->getMailanBakarra(),  ];
-                },
+                'choice_attr' => fn($choice, $key, $value) => ['class' => 'balioespena-input maila'.$choice->getLvl(),  "data-bestebalioespena"=>"b".$choice->getBesteBalioespena(), "data-tree"=>$choice->getRoot()->getId(), "data-parent"=>$choice->getParentID(), "data-lvl" => $choice->getLvl(), "data-mailanbakarra" =>  "b".$choice->getMailanBakarra(),  ],
                 'attr' => [ 'class' => 'balioespena_tree'],
-                'query_builder' => function(  EntityRepository $er) {
-                    return $er->createQueryBuilder('n')->add('orderBy','n.root ASC,  n.lft + n.lvl  ASC, n.id ASC');
-                }
+                'query_builder' => fn(EntityRepository $er) => $er->createQueryBuilder('n')->add('orderBy','n.root ASC,  n.lft + n.lvl  ASC, n.id ASC')
                 ])
             ->add('beste_balioespena')
             ->add('gaitasuna', null,  [
@@ -159,16 +116,12 @@ class FitxakType extends AbstractType
             ])
             ->add('eragilea', null,  [
                 'label' => 'Eskaera nondik dator',
-                'class' => "App\Entity\Eragilea",
+                'class' => \App\Entity\Eragilea::class,
                 'multiple' => true,
                 'expanded' => true,
-                'choice_attr' => function($choice, $key, $value) {    
-                    return ['class' => 'eragilea-input maila'.$choice->getLvl(), "data-besteeragile"=>"b".$choice->getBesteEragile(), "data-tree"=>$choice->getRoot()->getId(), "data-parent"=>$choice->getParentID(), "data-lvl" => $choice->getLvl(), "data-bestegaixotasun" =>  "b".$choice->getBesteGaixotasun(),  ];
-                },
+                'choice_attr' => fn($choice, $key, $value) => ['class' => 'eragilea-input maila'.$choice->getLvl(), "data-besteeragile"=>"b".$choice->getBesteEragile(), "data-tree"=>$choice->getRoot()->getId(), "data-parent"=>$choice->getParentID(), "data-lvl" => $choice->getLvl(), "data-bestegaixotasun" =>  "b".$choice->getBesteGaixotasun(),  ],
                 'attr' => [ 'class' => 'eragilea_tree'],
-                'query_builder' => function(  EntityRepository $er) {
-                    return $er->createQueryBuilder('n')->add('orderBy','n.root ASC,  n.lft + n.lvl  ASC, n.id ASC');
-                }
+                'query_builder' => fn(EntityRepository $er) => $er->createQueryBuilder('n')->add('orderBy','n.root ASC,  n.lft + n.lvl  ASC, n.id ASC')
                 ])
             ->add('beste_eragile')
             ->add('beste_gaixotasun')
@@ -179,7 +132,7 @@ class FitxakType extends AbstractType
             ;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => Fitxak::class,

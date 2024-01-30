@@ -24,33 +24,4 @@ class EragileaRepository extends NestedTreeRepository
         parent::__construct($manager, $manager->getClassMetadata(Eragilea::class));
         //parent::__construct($registry, Eragilea::class);
     }
-
-    // /**
-    //  * @return Eragilea[] Returns an array of Eragilea objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('e')
-            ->andWhere('e.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('e.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Eragilea
-    {
-        return $this->createQueryBuilder('e')
-            ->andWhere('e.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

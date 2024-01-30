@@ -13,7 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 class FitxakSearchFormType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('egoera',EntityType::class,[
@@ -27,13 +27,9 @@ class FitxakSearchFormType extends AbstractType
                 'placeholder' => '',
                 'class' => Balioespena::class,
                 'required' => false,
-                'choice_attr' => function($choice, $key, $value) {    
-                    return ['class' => 'balioespena-input maila'.$choice->getLvl(),  "data-bestebalioespena"=>"b".$choice->getBesteBalioespena(), "data-tree"=>$choice->getRoot()->getId(), "data-parent"=>$choice->getParentID(), "data-lvl" => $choice->getLvl(), "data-mailanbakarra" =>  "b".$choice->getMailanBakarra(),  ];
-                },
+                'choice_attr' => fn($choice, $key, $value) => ['class' => 'balioespena-input maila'.$choice->getLvl(),  "data-bestebalioespena"=>"b".$choice->getBesteBalioespena(), "data-tree"=>$choice->getRoot()->getId(), "data-parent"=>$choice->getParentID(), "data-lvl" => $choice->getLvl(), "data-mailanbakarra" =>  "b".$choice->getMailanBakarra(),  ],
                 'attr' => [ 'class' => 'balioespena_tree'],
-                'query_builder' => function($em) {
-                    return $em->balioespenaLevelQB();
-                }
+                'query_builder' => fn($em) => $em->balioespenaLevelQB()
             ])
             ->add('fromDate', DateType::class, [
                 'constraints' => [
@@ -58,7 +54,7 @@ class FitxakSearchFormType extends AbstractType
         ;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             // Configure your form options here

@@ -9,25 +9,17 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class NazionalitateaType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('parent', null, array(
-                "label"=>"Goiko maila"
-            ))
-            ->add('maila_eu', null, array(
-                "label"=>"Maila izena"
-            ))
-            ->add('maila_es', null, array(
-                "label"=>"Nombre nivel"
-            ))
-            ->add('estatua', null, array(
-                "label"=>"Estatua jarri behar da"
-            ))
+            ->add('parent', null, ["label"=>"Goiko maila"])
+            ->add('maila_eu', null, ["label"=>"Maila izena"])
+            ->add('maila_es', null, ["label"=>"Nombre nivel"])
+            ->add('estatua', null, ["label"=>"Estatua jarri behar da"])
         ;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => Nazionalitatea::class,

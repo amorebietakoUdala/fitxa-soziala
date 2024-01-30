@@ -6,27 +6,19 @@ use App\Repository\EgoeraRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Intl\Locale;
 
-/**
- * @ORM\Entity(repositoryClass=EgoeraRepository::class)
- */
-class Egoera
+#[ORM\Entity(repositoryClass: EgoeraRepository::class)]
+class Egoera implements \Stringable
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=50)
-     */
-    private $egoera_es;
+    #[ORM\Column(type: 'string', length: 50)]
+    private ?string $egoera_es = null;
 
-    /**
-     * @ORM\Column(type="string", length=50)
-     */
-    private $egoera_eu;
+    #[ORM\Column(type: 'string', length: 50)]
+    private ?string $egoera_eu = null;
 
     public function getId(): ?int
     {
@@ -57,14 +49,14 @@ class Egoera
         return $this;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         if (isset($GLOBALS['request']) && $GLOBALS['request']) {
             $locale = $GLOBALS['request']->getLocale();
         } else {
             $locale = Locale::getDefault();
         }
-        if ($locale == 'es') return $this->egoera_es;
-        return $this->egoera_eu;
+        if ($locale == 'es') return (string) $this->egoera_es;
+        return (string) $this->egoera_eu;
     }
 }

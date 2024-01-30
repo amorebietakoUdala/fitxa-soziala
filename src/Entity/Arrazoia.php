@@ -9,88 +9,56 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Intl\Locale;
 
-/**
- * @Gedmo\Tree(type="nested")
- * @ORM\Table(name="arrazoia")
- * use repository for handy tree functions
- * @ORM\Entity(repositoryClass="App\Repository\ArrazoiaRepository")
- */
-class Arrazoia
+#[Gedmo\Tree(type: 'nested')]
+#[ORM\Table(name: 'arrazoia')]
+#[ORM\Entity(repositoryClass: ArrazoiaRepository::class)]
+class Arrazoia implements \Stringable
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $maila_eu;
+    #[ORM\Column(type: 'string', length: 255)]
+    private ?string $maila_eu = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $maila_es;
+    #[ORM\Column(type: 'string', length: 255)]
+    private ?string $maila_es = null;
 
-    /**
-     * @Gedmo\TreeLeft
-     * @ORM\Column(name="lft", type="integer")
-     */
-    private $lft;
+    #[Gedmo\TreeLeft]
+    #[ORM\Column(name: 'lft', type: 'integer')]
+    private ?int $lft = null;
 
-    /**
-     * @Gedmo\TreeLevel
-     * @ORM\Column(name="lvl", type="integer")
-     */
-    private $lvl;
+    #[Gedmo\TreeLevel]
+    #[ORM\Column(name: 'lvl', type: 'integer')]
+    private ?int $lvl = null;
 
-    /**
-     * @Gedmo\TreeRight
-     * @ORM\Column(name="rgt", type="integer")
-     */
-    private $rgt;
+    #[Gedmo\TreeRight]
+    #[ORM\Column(name: 'rgt', type: 'integer')]
+    private ?int $rgt = null;
 
-    /**
-     * @Gedmo\TreeRoot
-     * @ORM\ManyToOne(targetEntity=Arrazoia::class)
-     * @ORM\JoinColumn(name="tree_root", referencedColumnName="id", onDelete="CASCADE")s)
-     */
-    private $root;
+    #[Gedmo\TreeRoot]
+    #[ORM\ManyToOne(targetEntity: Arrazoia::class)]
+    #[ORM\JoinColumn(name: 'tree_root', referencedColumnName: 'id', onDelete: 'CASCADE')]
+    private ?Arrazoia $root = null;
 
-    /**
-     * @Gedmo\TreeParent
-     * @ORM\ManyToOne(targetEntity=Arrazoia::class, inversedBy="children")
-     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="CASCADE")
-     */
-    private $parent;
+    #[Gedmo\TreeParent]
+    #[ORM\ManyToOne(targetEntity: Arrazoia::class, inversedBy: 'children')]
+    #[ORM\JoinColumn(name: 'parent_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
+    private ?Arrazoia $parent = null;
 
+    #[ORM\OneToMany(targetEntity: 'Arrazoia', mappedBy: 'parent')]
+    #[ORM\OrderBy(['lft' => 'ASC'])]
+    private readonly Collection $children;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Arrazoia", mappedBy="parent")
-     * @ORM\OrderBy({"lft" = "ASC"})
-     */
-    private $children;
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    private ?bool $beste_arrazoia = null;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    private $beste_arrazoia;
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    private ?bool $beste_babeseza = null;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    private $beste_babeseza;
-
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    private $beste_bazterkeria;
-
-
-    
-    
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    private ?bool $beste_bazterkeria = null;
 
     public function __construct()
     {
@@ -194,18 +162,6 @@ class Arrazoia
         return $this;
     }
 
-    public function getArrazoia(): ?self
-    {
-        return $this->arrazoia;
-    }
-
-    public function setArrazoia(?self $arrazoia): self
-    {
-        $this->arrazoia = $arrazoia;
-
-        return $this;
-    }
-    
     public function getTitle(): ?string
     {
         if(isset($GLOBALS['request']) && $GLOBALS['request']) {
@@ -226,17 +182,15 @@ class Arrazoia
         return $this->maila_eu;
     }
     
-    public function __toString() {
-
-        
+    public function __toString(): string {
         if(isset($GLOBALS['request']) && $GLOBALS['request']) {
             $locale = $GLOBALS['request']->getLocale(); 
         }else{
             $locale = Locale::getDefault();
         }
-        if ($locale == 'es') return $this->maila_es;
+        if ($locale == 'es') return (string) $this->maila_es;
 
-        return $this->maila_eu;
+        return (string) $this->maila_eu;
     }
 
     public function getBesteArrazoia(): ?bool

@@ -4,30 +4,21 @@ namespace App\Entity;
 
 use App\Repository\EstatuakRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Intl\Locale;
 
 
-/**
- * @ORM\Entity(repositoryClass=EstatuakRepository::class)
- */
-class Estatuak
+#[ORM\Entity(repositoryClass: EstatuakRepository::class)]
+class Estatuak implements \Stringable
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $estatua;
+    #[ORM\Column(type: 'string', length: 255)]
+    private ?string $estatua = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $kodea;
+    #[ORM\Column(type: 'string', length: 255)]
+    private ?string $kodea = null;
 
     public function getId(): ?int
     {
@@ -57,8 +48,8 @@ class Estatuak
 
         return $this;
     }
-    public function __toString() {
+    public function __toString(): string {
 
-        return $this->estatua;
+        return (string) $this->estatua;
     }
 }

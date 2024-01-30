@@ -6,27 +6,19 @@ use App\Repository\BizikidetzaRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Intl\Locale;
 
-/**
- * @ORM\Entity(repositoryClass=BizikidetzaRepository::class)
- */
-class Bizikidetza
+#[ORM\Entity(repositoryClass: BizikidetzaRepository::class)]
+class Bizikidetza implements \Stringable
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $bizikidetza_eu;
+    #[ORM\Column(type: 'string', length: 255)]
+    private ?string $bizikidetza_eu = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $bizikidetza_es;
+    #[ORM\Column(type: 'string', length: 255)]
+    private ?string $bizikidetza_es = null;
 
     public function getId(): ?int
     {
@@ -57,13 +49,13 @@ class Bizikidetza
         return $this;
     }
     
-    public function __toString() {
+    public function __toString(): string {
         if(isset($GLOBALS['request']) && $GLOBALS['request']) {
             $locale = $GLOBALS['request']->getLocale(); 
         }else{
             $locale = Locale::getDefault();
         }
-        if ($locale == 'es') return $this->bizikidetza_es;
-        return $this->bizikidetza_eu;
+        if ($locale == 'es') return (string) $this->bizikidetza_es;
+        return (string) $this->bizikidetza_eu;
     }
 }

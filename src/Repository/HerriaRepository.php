@@ -19,46 +19,12 @@ class HerriaRepository extends ServiceEntityRepository
         parent::__construct($registry, Herria::class);
     }
 
-    
+
     public function search($value)
     {
-    
         return $this->createQueryBuilder('h')
-            //->andWhere('h.herria = :val')
-            //->setParameter('val', $value)
             ->orderBy('h.id', 'ASC')
-            //->setMaxResults(10)
             ->getQuery()->getArrayResult() 
         ;
     }
-    
-    
-    // /**
-    //  * @return Herria[] Returns an array of Herria objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('h')
-            ->andWhere('h.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('h.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Herria
-    {
-        return $this->createQueryBuilder('h')
-            ->andWhere('h.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

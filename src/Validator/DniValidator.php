@@ -37,7 +37,7 @@ class DniValidator extends ConstraintValidator
         }
         
         
-        if ( stristr( $dokumentu_mota, "pasap" ) !== false ) return;
+        if ( stristr( (string) $dokumentu_mota, "pasap" ) !== false ) return;
         
         
 
@@ -57,7 +57,7 @@ class DniValidator extends ConstraintValidator
         
         }
         
-        $nieLetra=array('X'=>0,'Y'=>1,'Z'=>2);
+        $nieLetra=['X'=>0, 'Y'=>1, 'Z'=>2];
         $balidazio=['T','R','W','A','G','M','Y','F','P','D','X','B','N','J','Z','S','Q','V','H','L','C','K','E'];
         
         $letra1=$value[0];

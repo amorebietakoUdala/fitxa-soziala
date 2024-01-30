@@ -22,27 +22,15 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Core\Security;
 
 
-/**
- * @Route("/{_locale<%supported_locales%>}/fitxak")
- */
+#[Route(path: '/{_locale<%supported_locales%>}/fitxak')]
 class FitxakController extends BaseController
 {
 
-    private $security;
-    private FitxakRepository $fitxakRepository;
-    private EntityManagerInterface $em;
-
-    public function __construct(Security $security, FitxakRepository $fitxakRepository, EntityManagerInterface $em)
+    public function __construct(private readonly \Symfony\Bundle\SecurityBundle\Security $security, private readonly FitxakRepository $fitxakRepository, private readonly EntityManagerInterface $em)
     {
-
-        $this->security = $security;
-        $this->fitxakRepository = $fitxakRepository;
-        $this->em = $em;
     }
 
-    /**
-     * @Route("/", name="fitxak_index", methods={"GET","POST"})
-     */
+    #[Route(path: '/', name: 'fitxak_index', methods: ['GET', 'POST'])]
     public function index(Request $request): Response
     {
         $this->loadQueryParameters($request);
@@ -61,13 +49,11 @@ class FitxakController extends BaseController
         $fitxaks = $this->fitxakRepository->findFitxakByCriteria($filters);
         return $this->render('fitxak/index.html.twig', [
             'fitxaks' => $fitxaks,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 
-    /**
-     * @Route("/new", name="fitxak_new", methods={"GET","POST"})
-     */
+    #[Route(path: '/new', name: 'fitxak_new', methods: ['GET', 'POST'])]
     public function new(Request $request): Response
     {
         $fitxak = new Fitxak();
@@ -83,13 +69,11 @@ class FitxakController extends BaseController
 
         return $this->render('fitxak/new.html.twig', [
             'fitxak' => $fitxak,
-            'form' => $form->createView()
+            'form' => $form
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="fitxak_show", methods={"GET"})
-     */
+    #[Route(path: '/{id}', name: 'fitxak_show', methods: ['GET'])]
     public function show(Request $request, Fitxak $fitxak): Response
     {
         $this->loadQueryParameters($request);
@@ -98,9 +82,7 @@ class FitxakController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="fitxak_edit", methods={"GET","POST"})
-     */
+    #[Route(path: '/{id}/edit', name: 'fitxak_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Fitxak $fitxak): Response
     {
         $this->loadQueryParameters($request);
@@ -120,14 +102,12 @@ class FitxakController extends BaseController
 
         return $this->render('fitxak/edit.html.twig', [
             'fitxak' => $fitxak,
-            'form' => $form->createView(),
+            'form' => $form,
             'validateError' => $validate_error
         ]);
     }
 
-    /**
-     * @Route("/{id}/assign-me", name="fitxak_assign_me", methods={"GET","POST"})
-     */
+    #[Route(path: '/{id}/assign-me', name: 'fitxak_assign_me', methods: ['GET', 'POST'])]
     public function assign(Request $request, Fitxak $fitxak) {
         $this->loadQueryParameters($request);
         /** @var User $user */
@@ -138,9 +118,7 @@ class FitxakController extends BaseController
         return $this->redirect($request->get('returnUrl'));
     }
 
-    /**
-     * @Route("/{id}", name="fitxak_delete", methods={"POST"})
-     */
+    #[Route(path: '/{id}', name: 'fitxak_delete', methods: ['POST'])]
     public function delete(Request $request, Fitxak $fitxak): Response
     {
         $returnUrl = $request->get('returnUrl');
