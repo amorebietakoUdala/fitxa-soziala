@@ -44,8 +44,13 @@
             {{"Hizkuntza"|trans}}
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge(app.request.query.all|merge({_locale: 'eu'}))) }}">Eu</a>
-            <a class="dropdown-item" href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge(app.request.query.all|merge({_locale: 'es'}))) }}">Es</a>
+              {% if app.request.attributes.get('_route') is not null %}
+                <a class="dropdown-item" href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge(app.request.query.all|merge({_locale: 'eu'}))) }}">Eu</a>
+                <a class="dropdown-item" href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge(app.request.query.all|merge({_locale: 'es'}))) }}">Es</a>
+              {% else %}
+                <a class="dropdown-item" href="{{ path('fitxak_index') }}">Eu</a>
+                <a class="dropdown-item" href="{{ path('fitxak_index') }}">Es</a>
+              {% endif %}
             </div>
         </li>
     <ul>
