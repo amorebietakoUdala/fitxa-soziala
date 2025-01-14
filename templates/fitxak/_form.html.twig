@@ -6,25 +6,22 @@
 
     <div class="row">
         <div class="col">
-            
             <div class="my-custom-class-for-errors">
                 {{ form_errors(form) }}
             </div>
         </div>
     </div>
-        
+
     <div class="row">
         <div class="col-3">
             {{ form_label(form.egoera) }}
             {{ form_widget(form.egoera) }}
         </div>
     </div>
-    
+
     <div class="row">
         <div class="col">
-           
             <div class="card">
-                                
                 <div class="card-header eremu_buru" id="headingIzena">
                     {{ "000 Identifikazioa" |trans }}
                 </div>
@@ -65,7 +62,7 @@
             </div>
         </div>
     </div>
-            
+
     <div class="row">
         <div class="col">
             <div class="card">
@@ -73,32 +70,23 @@
                     {{ form_label(form.nazionalitatea) }}
                 </div>
                 <div class="card-body">
-                
-                 <div id="beste_estatua1" class="estatua_optional" >
-                    {{ form_row(form.estatua) }}
-                </div>
-  
+                    <div id="beste_estatua1" class="estatua_optional">
+                        {{ form_row(form.estatua) }}
+                    </div>
                     <div class="accordion" id="accordionNazionalitatea">
                         <div class="card">
-                            <div class="card-header" >
-                                
-                                    <button id="hbutNazionalitatea"  class="btn btn-link btn-block" type="button" data-toggle="collapse" data-target="#collapseNazionalitatea" aria-expanded="false">
+                            <div class="card-header">
+                                <button id="hbutNazionalitatea" class="btn btn-link btn-block" type="button" data-toggle="collapse" data-target="#collapseNazionalitatea" aria-expanded="false">
                                     ---
-                                    </button>
-
+                                </button>
                             </div>
-
                             <div id="collapseNazionalitatea" class="collapse" aria-labelledby="headingNazionalitatea" data-parent="#accordionNazionalitatea">
                                 <div class="card-body">
                                     {{ form_widget(form.nazionalitatea) }}
-                                    
-                                   
                                 </div>
-                                
                             </div>
                         </div>
                     </div>
-                    
                 </div>
             </div>
         </div>
@@ -113,7 +101,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="row">
         <div class="col">
             <div class="card">
@@ -129,31 +117,25 @@
     <div class="row">
         <div class="col">
             <div class="card">
-                <div class="card-header eremu_buru" id="headingErrolda" >
+                <div class="card-header eremu_buru" id="headingErrolda">
                     {{ "Errolda egoera"|trans }}
                     {{ form_label(form.errolda) }}
                 </div>
                 <div class="card-body">
-  
                     <div class="accordion" id="accordionErrolda">
                         <div class="card">
                             <div class="card-header">
-                                
-                                    <button id="hbutErrolda"  class="btn btn-link btn-block" type="button" data-toggle="collapse" data-target="#collapseErrolda" aria-expanded="false">
+                                <button id="hbutErrolda" class="btn btn-link btn-block" type="button" data-toggle="collapse" data-target="#collapseErrolda" aria-expanded="false">
                                     ---
-                                    </button>
-
+                                </button>
                             </div>
-
                             <div id="collapseErrolda" class="collapse" aria-labelledby="headingErrolda" data-parent="#accordionErrolda">
                                 <div class="card-body">
                                     {{ form_widget(form.errolda) }}
-                                    
-                                    <div id="errolda_data1" class="errolda_data" >
+                                    <div id="errolda_data1" class="errolda_data">
                                         {{ form_row(form.errolda_data) }}
                                     </div>
                                 </div>
-                                
                             </div>
                         </div>
                     </div>
@@ -161,44 +143,35 @@
             </div>
         </div>
     </div>
-    
-    
+
     <div class="row">
         <div class="col">
             <div class="card">
-                <div class="card-header eremu_buru" id="headingArrazoia" >
+                <div class="card-header eremu_buru" id="headingArrazoia">
                     {{ "Pertsona erabiltzaileak duen eskaera eta hasierako beharren balorazioa: GZES, jarduera-eremu orokorrak"|trans }}
                     {{ form_label(form.arrazoia) }}
                 </div>
                 <div class="card-body">
-  
                     <div class="accordion" id="accordionArrazoia">
                         <div class="card">
                             <div class="card-header">
-                                
-                                    <button id="hbutArrazoia"  class="btn btn-link btn-block" type="button" data-toggle="collapse" data-target="#collapseArrazoia" aria-expanded="false">
+                                <button id="hbutArrazoia" class="btn btn-link btn-block" type="button" data-toggle="collapse" data-target="#collapseArrazoia" aria-expanded="false">
                                     ---
-                                    </button>
-
+                                </button>
                             </div>
-
                             <div id="collapseArrazoia" class="collapse" aria-labelledby="headingArrazoia" data-parent="#accordionArrazoia">
                                 <div class="card-body">
                                     {{ form_widget(form.arrazoia) }}
-                                    
-                                    <div id="beste_arrazoia1" class="beste_arrazoia" >
+                                    <div id="beste_arrazoia1" class="beste_arrazoia">
                                         {{ form_row(form.beste_arrazoia) }}
                                     </div>
-                                    <div id="beste_babeseza1" class="beste_babeseza" >
+                                    <div id="beste_babeseza1" class="beste_babeseza">
                                         {{ form_row(form.beste_babeseza) }}
                                     </div>
-                                    <div id="beste_bazterkeria1" class="beste_bazterkeria" >
+                                    <div id="beste_bazterkeria1" class="beste_bazterkeria">
                                         {{ form_row(form.beste_bazterkeria) }}
                                     </div>
-                                    
-                                    
                                 </div>
-                                
                             </div>
                         </div>
                     </div>
@@ -206,35 +179,28 @@
             </div>
         </div>
     </div>
- 
- 
-     <div class="row">
+
+    <div class="row">
         <div class="col">
             <div class="card">
-                <div class="card-header eremu_buru" id="headingBalioespena" >
+                <div class="card-header eremu_buru" id="headingBalioespena">
                     {{ form_label(form.balioespena) }}
                 </div>
                 <div class="card-body">
-  
                     <div class="accordion" id="accordionBalioespena">
                         <div class="card">
                             <div class="card-header">
-                                
-                                    <button id="hbutBalioespena"  class="btn btn-link btn-block" type="button" data-toggle="collapse" data-target="#collapseBalioespena" aria-expanded="false">
+                                <button id="hbutBalioespena" class="btn btn-link btn-block" type="button" data-toggle="collapse" data-target="#collapseBalioespena" aria-expanded="false">
                                     ---
-                                    </button>
-
+                                </button>
                             </div>
-
                             <div id="collapseBalioespena" class="collapse" aria-labelledby="headingBalioespena" data-parent="#accordionBalioespena">
                                 <div class="card-body">
                                     {{ form_widget(form.balioespena) }}
-                                    
-                                    <div id="beste_balioespena1" class="beste_balioespena" >
+                                    <div id="beste_balioespena1" class="beste_balioespena">
                                         {{ form_row(form.beste_balioespena) }}
                                     </div>
                                 </div>
-                                
                             </div>
                         </div>
                     </div>
@@ -242,7 +208,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="row">
         <div class="col">
             <div class="card">
@@ -255,50 +221,35 @@
             </div>
         </div>
     </div>
- 
- 
- 
- 
- 
+
     <div class="row">
         <div class="col">
             <div class="card">
-                <div class="card-header eremu_buru" id="headingEragilea" >
-                    
-                        {{"Harremanak izateko eta komunikatzeko oinarrizko abileziak"|trans}}
-                    
-                        {{ form_label(form.eragilea) }}
-                    
+                <div class="card-header eremu_buru" id="headingEragilea">
+                    {{"Harremanak izateko eta komunikatzeko oinarrizko abileziak"|trans}}
+                    {{ form_label(form.eragilea) }}
                 </div>
                 <div class="card-body">
-  
                     <div class="accordion" id="accordionEragilea">
                         <div class="card">
                             <div class="card-header">
-                                
-                                    <button id="hbutEragilea"  class="btn btn-link btn-block" type="button" data-toggle="collapse" data-target="#collapseEragilea" aria-expanded="false">
+                                <button id="hbutEragilea" class="btn btn-link btn-block" type="button" data-toggle="collapse" data-target="#collapseEragilea" aria-expanded="false">
                                     ---
-                                    </button>
-
+                                </button>
                             </div>
 
                             <div id="collapseEragilea" class="collapse" aria-labelledby="headingEragilea" data-parent="#accordionEragilea">
                                 <div class="card-body">
-                                    
                                     <div class="row">
                                         {{ form_widget(form.eragilea) }}
                                     </div>
-                                    
-                                    
-                                    <div id="beste_gaixotasun1" class="beste_gaixotasun" >
+                                    <div id="beste_gaixotasun1" class="beste_gaixotasun">
                                         {{ form_row(form.beste_gaixotasun) }}
                                     </div>
-                                    
-                                    <div id="beste_eragilea1" class="beste_eragilea" >
+                                    <div id="beste_eragilea1" class="beste_eragilea">
                                         {{ form_row(form.beste_eragile) }}
                                     </div>
                                 </div>
-                                
                             </div>
                         </div>
                     </div>
@@ -306,7 +257,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="row">
         <div class="col">
             <div class="card">
@@ -324,15 +275,14 @@
         </div>
     </div>
 
- 
     <div class="row">
         <div class="col">
             <a class="btn" href="{{ returnUrl is defined and not returnUrl is empty ? returnUrl : path('fitxak_index') }}">{{ 'Utzi' | trans }}</a>
         </div>
         <div class="col">
-            <button id="save_button"  class="btn">{{ 'Gorde' |trans }}</button>
+            <button id="save_button" class="btn">{{ 'Gorde' |trans }}</button>
         </div>
-    </div>  
+    </div>
     
 {{ form_end(form) }}
 

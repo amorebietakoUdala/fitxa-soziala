@@ -31,4 +31,12 @@ class ArrazoiaRepository extends NestedTreeRepository
             ->getResult()
         ;
     }
+    
+    public function arrazoiaLevelQB(int $level = 0) {
+        $qb  = $this->createQueryBuilder('b')
+            ->andWhere('b.lvl = :level')
+            ->setParameter('level', $level);
+
+        return $qb;
+    }    
 }

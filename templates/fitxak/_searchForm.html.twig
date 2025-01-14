@@ -1,29 +1,35 @@
 {{ form_start(form, {'attr' : {
     'class' : 'w-100'
 }}) }}
-   <div class="row align-items-center">
-      <div class="col-lg form-group">
-            {{ form_label(form.egoera) }}
-            {{ form_widget(form.egoera, {'attr' : { 'class': 'col form-control ' }})  }}
+      <div class="row align-items-center">
+            <div class="col-lg-auto form-group">
+                  {{ form_label(form.egoera) }}
+                  {{ form_widget(form.egoera, {'attr' : { 'class': 'col form-control ' }})  }}
+            </div>
+            <div class="col-lg-2 form-group">
+                  {{ form_label(form.fromDate) }}
+                  {{ form_widget(form.fromDate, {'attr' : { 'class': 'col form-control js-datepicker' }})  }}
+            </div>
+            <div class="col-lg-2 form-group">
+                  {{ form_label(form.toDate) }}
+                  {{ form_widget(form.toDate, {'attr' : { 'class': 'col form-control  js-datepicker' }})  }}
+            </div>
+            <div class="col-lg-auto form-group">
+                  {{ form_label(form.erabiltzailea) }}
+                  {{ form_widget(form.erabiltzailea, {'attr' : { 'class': 'col form-control' }})  }}
+            </div>
       </div>
-      <div class="col-lg-5 form-group">
-            {{ form_label(form.balioespena) }}
-            {{ form_widget(form.balioespena, {'attr' : { 'class': 'col form-control ' }}) }}
+      <div class="row align-items-center">
+            <div class="col-lg-auto form-group">
+                  {{ form_label(form.balioespena) }}
+                  {{ form_widget(form.balioespena, {'attr' : { 'class': 'col form-control ' }}) }}
+            </div>
+            <div class="col-lg-auto form-group">
+                  {{ form_label(form.arrazoia) }}
+                  {{ form_widget(form.arrazoia, {'attr' : { 'class': 'col form-control ' }}) }}
+            </div>
+            <div class="col-lg-auto">
+                  <button class="btn btn-primary" type="submit">{{ 'btn.search' | trans }}</button>
+            </div>
       </div>
-      <div class="col-lg form-group">
-            {{ form_label(form.fromDate) }}
-            {{ form_widget(form.fromDate, {'attr' : { 'class': 'col form-control js-datepicker' }})  }}
-      </div>
-      <div class="col-lg form-group">
-            {{ form_label(form.toDate) }}
-            {{ form_widget(form.toDate, {'attr' : { 'class': 'col form-control  js-datepicker' }})  }}
-      </div>
-      <div class="col-lg form-group">
-            {{ form_label(form.erabiltzailea) }}
-            {{ form_widget(form.erabiltzailea, {'attr' : { 'class': 'col form-control' }})  }}
-      </div>
-      <div class="col">
-            <button class="btn btn-primary" type="submit">{{ 'btn.search' | trans }}</button>
-      </div>
-   </div>
 {{ form_end(form) }}

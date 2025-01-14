@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Arrazoia;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -30,6 +31,22 @@ class FitxakSearchFormType extends AbstractType
                 'choice_attr' => fn($choice, $key, $value) => ['class' => 'balioespena-input maila'.$choice->getLvl(),  "data-bestebalioespena"=>"b".$choice->getBesteBalioespena(), "data-tree"=>$choice->getRoot()->getId(), "data-parent"=>$choice->getParentID(), "data-lvl" => $choice->getLvl(), "data-mailanbakarra" =>  "b".$choice->getMailanBakarra(),  ],
                 'attr' => [ 'class' => 'balioespena_tree'],
                 'query_builder' => fn($em) => $em->balioespenaLevelQB()
+            ])
+            ->add('arrazoia', EntityType::class,  [
+                'label' => 'Arrazoia',
+                'placeholder' => '',
+                'class' => Arrazoia::class,
+                'required' => false,
+                'choice_attr' => fn($choice, $key, $value) => [
+                    'class' => 'balioespena-input maila'.$choice->getLvl(),  
+                    "data-bestearrazoia"=>"b".$choice->getBesteArrazoia(), 
+                    "data-tree"=>$choice->getRoot()->getId(), 
+                    "data-parent"=>$choice->getParentID(), 
+                    "data-lvl" => $choice->getLvl(), 
+//                    "data-mailanbakarra" => "b".$choice->getMailanBakarra(),  
+                ],
+                'attr' => [ 'class' => 'arrazoia_tree'],
+                'query_builder' => fn($em) => $em->arrazoiaLevelQB(1)
             ])
             ->add('fromDate', DateType::class, [
                 'constraints' => [
