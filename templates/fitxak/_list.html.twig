@@ -6,6 +6,7 @@
             <th>{{"izena"|trans|capitalize}}</th>
             <th>{{"Abizena"|trans|capitalize}}</th>
             <th>{{"Dokumentu zenbakia"|trans|capitalize }}</th>
+            <th>{{"Arrazoia"|trans|capitalize }}</th>
             <th>{{"Oharrak"|trans|capitalize }}</th>
             <th>{{"Eguneratua"|trans|capitalize }}</th>
             <th>{{"Erabiltzailea" |trans|capitalize }}</th>
@@ -20,10 +21,11 @@
             <td>{{ fitxak.izena }}</td>
             <td>{{ fitxak.abizena }}</td>
             <td>{{ fitxak.dokumentuZenbakia }}</td>
+            <td class="col-lg-2">{{ fitxak.arrazoia | filterArrazoia(1) | join (' | ') }}</td>
             <td class="textlimit" >{{ fitxak.oharrak }}</td>
             <td>{{ fitxak.updated ? fitxak.updated|date('Y-m-d') : '' }}</td>
             <td>{{ fitxak.erabiltzailea }} </td>
-            <td>
+            <td class="col-lg-1">
                 <div class="row">
                     {% if is_granted('IS_AUTHENTICATED_FULLY') and  ( is_granted('ROLE_ADMIN')  or fitxak.erabiltzailea == app.user.username ) %}
                         <a class="btn js-edit" role="button" href="{{ path('fitxak_edit', {'id': fitxak.id}) }}"><i class="bi bi-pencil"></i></a>
