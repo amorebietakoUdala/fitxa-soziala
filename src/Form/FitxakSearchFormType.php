@@ -10,6 +10,7 @@ use App\Entity\Balioespena;
 use App\Entity\Egoera;
 use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 class FitxakSearchFormType extends AbstractType
@@ -48,6 +49,13 @@ class FitxakSearchFormType extends AbstractType
                 'attr' => [ 'class' => 'arrazoia_tree'],
                 'query_builder' => fn($em) => $em->arrazoiaLevelQB(1)
             ])
+            ->add('arrazoiaBigarrenMaila', EntityType::class,  [
+                'class' => Arrazoia::class,
+                'label' => 'Arrazoia Bigarren Maila',
+                'placeholder' => '',
+                'required' => false,
+                'query_builder' => fn($em) => $em->arrazoiaLevelQB(2),
+            ])
             ->add('fromDate', DateType::class, [
                 'constraints' => [
                 ],
@@ -74,6 +82,7 @@ class FitxakSearchFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
+            'data_class' => null,
             // Configure your form options here
         ]);
     }

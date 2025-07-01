@@ -40,9 +40,18 @@ class FitxakRepository extends ServiceEntityRepository
                 $qb->andWhere("b.id = :balioespena")
                 ->setParameter('balioespena', $criteria['balioespena']);
             }
-            if ( isset($criteria['arrazoia']) && $criteria['arrazoia'] !== null ) {
+            // if ( isset($criteria['arrazoia']) && $criteria['arrazoia'] !== null ) {
+            //     $qb->andWhere("a.id = :arrazoia")
+            //     ->setParameter('arrazoia', $criteria['arrazoia']);
+            // }
+            if ( isset($criteria['arrazoiaBigarrenMaila']) && $criteria['arrazoiaBigarrenMaila'] !== null ) {
                 $qb->andWhere("a.id = :arrazoia")
-                ->setParameter('arrazoia', $criteria['arrazoia']);
+                ->setParameter('arrazoia', $criteria['arrazoiaBigarrenMaila']);
+            } else {
+                if ( isset($criteria['arrazoia']) && $criteria['arrazoia'] !== null ) {
+                    $qb->andWhere("a.id = :arrazoia")
+                    ->setParameter('arrazoia', $criteria['arrazoia']);
+                }
             }
             if ( isset($criteria['fromDate']) && $criteria['fromDate'] !== null ) {
                 $qb->andWhere("f.updated >= :fromDate")

@@ -39,4 +39,25 @@ class ArrazoiaRepository extends NestedTreeRepository
 
         return $qb;
     }    
+
+    public function arrazoiaLevel(int $level = 0) {
+        $qb  = $this->arrazoiaLevelQB($level);
+
+        return $qb->getQuery()->getResult();
+    }    
+
+    public function arrazoiaByParentQB(int $parent) {
+        $qb  = $this->createQueryBuilder('b')
+            ->andWhere('b.parent = :parent')
+            ->setParameter('parent', $parent);
+
+        return $qb;
+    }    
+
+    public function arrazoiaByParent(int $parent) {
+        $qb  = $this->arrazoiaByParentQB($parent);
+
+        return $qb->getQuery()->getResult();
+    }    
+
 }

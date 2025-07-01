@@ -19,14 +19,24 @@
                   {{ form_widget(form.erabiltzailea, {'attr' : { 'class': 'col form-control' }})  }}
             </div>
       </div>
-      <div class="row align-items-center">
-            <div class="col-lg-6 form-group">
+      {% set arrazoiaBigarrenMaila = ( form.vars.value is defined and form.vars.value is not null and form.vars.value is not empty ) ? form.vars.value.arrazoiaBigarrenMaila : '' %}
+      <div class="row align-items-center" {{ stimulus_controller('chained-select', {
+            'childSelectUrl' : path('api_get_arrazoiak'),
+            'locale': app.request.locale,
+            'childSelected': arrazoiaBigarrenMaila is defined and arrazoiaBigarrenMaila is not null and arrazoiaBigarrenMaila is not empty ? arrazoiaBigarrenMaila.id : '',
+      }) }}>
+            {#  #}
+            <div class="col-lg-4 form-group">
                   {{ form_label(form.balioespena) }}
-                  {{ form_widget(form.balioespena, {'attr' : { 'class': 'col form-control ' }}) }}
+                  {{ form_widget(form.balioespena, {'attr' : { 'class': 'col form-control' }}) }}
             </div>
             <div class="col-lg-auto form-group">
                   {{ form_label(form.arrazoia) }}
-                  {{ form_widget(form.arrazoia, {'attr' : { 'class': 'col form-control ' }}) }}
+                  {{ form_widget(form.arrazoia, {'attr' : { 'class': 'col form-control', 'data-chained-select-target' : 'masterSelect', 'data-action' : 'chained-select#onMasterChange' }}) }}
+            </div>
+            <div class="col-lg-4 form-group">
+                  {{ form_label(form.arrazoiaBigarrenMaila) }}
+                  {{ form_widget(form.arrazoiaBigarrenMaila, {'attr' : { 'class': 'col form-control', 'data-chained-select-target' : 'childSelect' }}) }}
             </div>
             <div class="col-lg-auto">
                   <button class="btn btn-primary" type="submit">{{ 'btn.search' | trans }}</button>

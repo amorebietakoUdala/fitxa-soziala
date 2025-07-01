@@ -2,31 +2,25 @@
 
 namespace App\Controller;
 
+use App\Entity\Arrazoia;
 use App\Entity\Balioespena;
 use App\Entity\Egoera;
 use App\Entity\Fitxak;
 use App\Form\FitxakSearchFormType;
 use App\Form\FitxakType;
 use App\Repository\FitxakRepository;
-use App\Repository\OharrakRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
-use Symfony\Component\HttpFoundation\JsonResponse;
-
-
-use Symfony\Component\Security\Core\Security;
-
 
 #[Route(path: '/{_locale<%supported_locales%>}/fitxak')]
 class FitxakController extends BaseController
 {
 
-    public function __construct(private readonly \Symfony\Bundle\SecurityBundle\Security $security, private readonly FitxakRepository $fitxakRepository, private readonly EntityManagerInterface $em)
+    public function __construct(private readonly Security $security, private readonly FitxakRepository $fitxakRepository, private readonly EntityManagerInterface $em)
     {
     }
 
@@ -140,6 +134,12 @@ class FitxakController extends BaseController
                 } elseif ( $key === 'balioespena' ) {
                     $balioespena = $this->em->getRepository(Balioespena::class)->find($value);
                     $params[$key] = $balioespena;
+                } elseif ( $key === 'arrazoiaBigarrenMaila' ) {
+                    $arrazoia = $this->em->getRepository(Arrazoia::class)->find($value);
+                    $params[$key] = $arrazoia;
+                } elseif ( $key === 'arrazoia' ) {
+                    $arrazoia = $this->em->getRepository(Arrazoia::class)->find($value);
+                    $params[$key] = $arrazoia;
                 }
                 elseif ( $key === 'fromDate' ) {
                     $date = DateTime::createFromFormat('Y-m-d', $value);

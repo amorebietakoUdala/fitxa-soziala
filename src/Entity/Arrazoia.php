@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Intl\Locale;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[Gedmo\Tree(type: 'nested')]
 #[ORM\Table(name: 'arrazoia')]
@@ -17,12 +18,15 @@ class Arrazoia implements \Stringable
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Groups('list')]
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups('list')]
     private ?string $maila_eu = null;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups('list')]
     private ?string $maila_es = null;
 
     #[Gedmo\TreeLeft]
@@ -31,6 +35,7 @@ class Arrazoia implements \Stringable
 
     #[Gedmo\TreeLevel]
     #[ORM\Column(name: 'lvl', type: 'integer')]
+    #[Groups('list')]
     private ?int $lvl = null;
 
     #[Gedmo\TreeRight]
