@@ -5,24 +5,28 @@ namespace App\Controller;
 use App\Entity\Bizikidetza;
 use App\Form\BizikidetzaType;
 use App\Repository\BizikidetzaRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Doctrine\Persistence\ManagerRegistry;
 
 #[Route(path: '/{_locale<%supported_locales%>}/bizikidetza')]
 class BizikidetzaController extends AbstractController
 {
-    public function __construct(private readonly ManagerRegistry $managerRegistry)
+    public function __construct(
+        private readonly EntityManagerInterface $entityManager,
+        private readonly BizikidetzaRepository $bizikidetzaRepository
+    )
     {
     }
     
     #[Route(path: '/', name: 'bizikidetza_index', methods: ['GET'])]
-    public function index(BizikidetzaRepository $bizikidetzaRepository): Response
+    public function index(): Response
     {
         return $this->render('bizikidetza/index.html.twig', [
-            'bizikidetzas' => $bizikidetzaRepository->findAll(),
+            'bizikidetzas' => $this->bizikidetzaRepository->findAll(),
         ]);
     }
 
@@ -34,9 +38,8 @@ class BizikidetzaController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->managerRegistry->getManager();
-            $entityManager->persist($bizikidetza);
-            $entityManager->flush();
+            $this->entityManager->persist($bizikidetza);
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('bizikidetza_index');
         }
@@ -56,13 +59,13 @@ class BizikidetzaController extends AbstractController
     }
 
     #[Route(path: '/{id}/edit', name: 'bizikidetza_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Bizikidetza $bizikidetza): Response
+    public function edit(Request $request, #[MapEntity(id: 'id')] Bizikidetza $bizikidetza): Response
     {
         $form = $this->createForm(BizikidetzaType::class, $bizikidetza);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->managerRegistry->getManager()->flush();
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('bizikidetza_index');
         }
@@ -74,12 +77,11 @@ class BizikidetzaController extends AbstractController
     }
 
     #[Route(path: '/{id}', name: 'bizikidetza_delete', methods: ['POST'])]
-    public function delete(Request $request, Bizikidetza $bizikidetza): Response
+    public function delete(Request $request, #[MapEntity(id: 'id')] Bizikidetza $bizikidetza): Response
     {
         if ($this->isCsrfTokenValid('delete'.$bizikidetza->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->managerRegistry->getManager();
-            $entityManager->remove($bizikidetza);
-            $entityManager->flush();
+            $this->entityManager->remove($bizikidetza);
+            $this->entityManager->flush();
         }
 
         return $this->redirectToRoute('bizikidetza_index');

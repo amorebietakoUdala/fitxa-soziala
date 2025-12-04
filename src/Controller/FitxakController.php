@@ -11,7 +11,7 @@ use App\Form\FitxakType;
 use App\Repository\FitxakRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -20,7 +20,10 @@ use Symfony\Component\Routing\Annotation\Route;
 class FitxakController extends BaseController
 {
 
-    public function __construct(private readonly Security $security, private readonly FitxakRepository $fitxakRepository, private readonly EntityManagerInterface $em)
+    public function __construct(
+        private readonly FitxakRepository $fitxakRepository, 
+        private readonly EntityManagerInterface $em
+    )
     {
     }
 
@@ -68,7 +71,7 @@ class FitxakController extends BaseController
     }
 
     #[Route(path: '/{id}', name: 'fitxak_show', methods: ['GET'])]
-    public function show(Request $request, Fitxak $fitxak): Response
+    public function show(Request $request, #[MapEntity(id: 'id')] Fitxak $fitxak): Response
     {
         $this->loadQueryParameters($request);
         return $this->render('fitxak/show.html.twig', [
@@ -77,7 +80,7 @@ class FitxakController extends BaseController
     }
 
     #[Route(path: '/{id}/edit', name: 'fitxak_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Fitxak $fitxak): Response
+    public function edit(Request $request, #[MapEntity(id: 'id')] Fitxak $fitxak): Response
     {
         $this->loadQueryParameters($request);
         $form = $this->createForm(FitxakType::class, $fitxak);
@@ -102,7 +105,7 @@ class FitxakController extends BaseController
     }
 
     #[Route(path: '/{id}/assign-me', name: 'fitxak_assign_me', methods: ['GET', 'POST'])]
-    public function assign(Request $request, Fitxak $fitxak) {
+    public function assign(Request $request, #[MapEntity(id: 'id')] Fitxak $fitxak) {
         $this->loadQueryParameters($request);
         /** @var User $user */
         $user = $this->getUser();
@@ -113,7 +116,7 @@ class FitxakController extends BaseController
     }
 
     #[Route(path: '/{id}', name: 'fitxak_delete', methods: ['POST'])]
-    public function delete(Request $request, Fitxak $fitxak): Response
+    public function delete(Request $request, #[MapEntity(id: 'id')] Fitxak $fitxak): Response
     {
         $returnUrl = $request->get('returnUrl');
         if ($this->isCsrfTokenValid('delete' . $fitxak->getId(), $request->request->get('_token'))) {

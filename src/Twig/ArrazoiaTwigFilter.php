@@ -3,14 +3,13 @@
 namespace App\Twig;
 
 use App\Entity\Arrazoia;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\PersistentCollection;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
 class ArrazoiaTwigFilter extends AbstractExtension
 {
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
             new TwigFilter('filterArrazoia', [$this, 'filterArrazoia']),

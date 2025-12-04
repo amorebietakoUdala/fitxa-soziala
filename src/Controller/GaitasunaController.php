@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Gaitasuna;
 use App\Form\GaitasunaType;
 use App\Repository\GaitasunaRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,14 +15,17 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route(path: '/{_locale<%supported_locales%>}/gaitasuna')]
 class GaitasunaController extends AbstractController
 {
-    public function __construct(private readonly \Doctrine\Persistence\ManagerRegistry $managerRegistry)
+    public function __construct(
+        private readonly EntityManagerInterface $entityManager,
+        private readonly GaitasunaRepository $gaitasunaRepository
+    )
     {
     }
     #[Route(path: '/', name: 'gaitasuna_index', methods: ['GET'])]
-    public function index(GaitasunaRepository $gaitasunaRepository): Response
+    public function index(): Response
     {
         return $this->render('gaitasuna/index.html.twig', [
-            'gaitasunas' => $gaitasunaRepository->findAll(),
+            'gaitasunas' => $this->gaitasunaRepository->findAll(),
         ]);
     }
 
@@ -32,9 +37,8 @@ class GaitasunaController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->managerRegistry->getManager();
-            $entityManager->persist($gaitasuna);
-            $entityManager->flush();
+            $this->entityManager->persist($gaitasuna);
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('gaitasuna_index');
         }
@@ -46,7 +50,7 @@ class GaitasunaController extends AbstractController
     }
 
     #[Route(path: '/{id}', name: 'gaitasuna_show', methods: ['GET'])]
-    public function show(Gaitasuna $gaitasuna): Response
+    public function show(#[MapEntity(id: 'id')] Gaitasuna $gaitasuna): Response
     {
         return $this->render('gaitasuna/show.html.twig', [
             'gaitasuna' => $gaitasuna,
@@ -54,13 +58,13 @@ class GaitasunaController extends AbstractController
     }
 
     #[Route(path: '/{id}/edit', name: 'gaitasuna_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Gaitasuna $gaitasuna): Response
+    public function edit(Request $request, #[MapEntity(id: 'id')] Gaitasuna $gaitasuna): Response
     {
         $form = $this->createForm(GaitasunaType::class, $gaitasuna);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->managerRegistry->getManager()->flush();
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('gaitasuna_index');
         }
@@ -72,12 +76,11 @@ class GaitasunaController extends AbstractController
     }
 
     #[Route(path: '/{id}', name: 'gaitasuna_delete', methods: ['POST'])]
-    public function delete(Request $request, Gaitasuna $gaitasuna): Response
+    public function delete(Request $request, #[MapEntity(id: 'id')] Gaitasuna $gaitasuna): Response
     {
         if ($this->isCsrfTokenValid('delete'.$gaitasuna->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->managerRegistry->getManager();
-            $entityManager->remove($gaitasuna);
-            $entityManager->flush();
+            $this->entityManager->remove($gaitasuna);
+            $this->entityManager->flush();
         }
 
         return $this->redirectToRoute('gaitasuna_index');

@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Bizitokia;
 use App\Form\BizitokiaType;
 use App\Repository\BizitokiaRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,15 +15,18 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route(path: '/{_locale<%supported_locales%>}/bizitokia')]
 class BizitokiaController extends AbstractController
 {
-    public function __construct(private readonly \Doctrine\Persistence\ManagerRegistry $managerRegistry)
+    public function __construct(
+        private readonly EntityManagerInterface $entityManager,
+        private readonly BizitokiaRepository $bizitokiaRepository
+    )
     {
     }
     
     #[Route(path: '/', name: 'bizitokia_index', methods: ['GET'])]
-    public function index(BizitokiaRepository $bizitokiaRepository): Response
+    public function index(): Response
     {
         return $this->render('bizitokia/index.html.twig', [
-            'bizitokias' => $bizitokiaRepository->findAll(),
+            'bizitokias' => $this->bizitokiaRepository->findAll(),
         ]);
     }
 
@@ -33,9 +38,8 @@ class BizitokiaController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->managerRegistry->getManager();
-            $entityManager->persist($bizitokium);
-            $entityManager->flush();
+            $this->entityManager->persist($bizitokium);
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('bizitokia_index');
         }
@@ -47,7 +51,7 @@ class BizitokiaController extends AbstractController
     }
 
     #[Route(path: '/{id}', name: 'bizitokia_show', methods: ['GET'])]
-    public function show(Bizitokia $bizitokium): Response
+    public function show(#[MapEntity(id: 'id')] Bizitokia $bizitokium): Response
     {
         return $this->render('bizitokia/show.html.twig', [
             'bizitokium' => $bizitokium,
@@ -55,13 +59,13 @@ class BizitokiaController extends AbstractController
     }
 
     #[Route(path: '/{id}/edit', name: 'bizitokia_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Bizitokia $bizitokium): Response
+    public function edit(Request $request, #[MapEntity(id: 'id')] Bizitokia $bizitokium): Response
     {
         $form = $this->createForm(BizitokiaType::class, $bizitokium);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->managerRegistry->getManager()->flush();
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('bizitokia_index');
         }
@@ -73,12 +77,11 @@ class BizitokiaController extends AbstractController
     }
 
     #[Route(path: '/{id}', name: 'bizitokia_delete', methods: ['POST'])]
-    public function delete(Request $request, Bizitokia $bizitokium): Response
+    public function delete(Request $request, #[MapEntity(id: 'id')] Bizitokia $bizitokium): Response
     {
         if ($this->isCsrfTokenValid('delete'.$bizitokium->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->managerRegistry->getManager();
-            $entityManager->remove($bizitokium);
-            $entityManager->flush();
+            $this->entityManager->remove($bizitokium);
+            $this->entityManager->flush();
         }
 
         return $this->redirectToRoute('bizitokia_index');

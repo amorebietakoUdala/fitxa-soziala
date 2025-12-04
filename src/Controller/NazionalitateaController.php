@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Nazionalitatea;
 use App\Form\NazionalitateaType;
 use App\Repository\NazionalitateaRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,15 +15,19 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route(path: '/{_locale<%supported_locales%>}/nazionalitatea')]
 class NazionalitateaController extends AbstractController
 {
-    public function __construct(private readonly \Doctrine\Persistence\ManagerRegistry $managerRegistry)
+    public function __construct(
+        private readonly EntityManagerInterface $entityManager,
+        private readonly NazionalitateaRepository $nazionalitateaRepository
+    )
     {
     }
+
     #[Route(path: '/', name: 'nazionalitatea_index', methods: ['GET'])]
-    public function index(NazionalitateaRepository $nazionalitateaRepository): Response
+    public function index(): Response
     {
         return $this->render('nazionalitatea/index.html.twig', [
             //'nazionalitateas' => $nazionalitateaRepository->findAll(),
-            'nazionalitateas' => $nazionalitateaRepository->treeList(),
+            'nazionalitateas' => $this->nazionalitateaRepository->treeList(),
         ]);
     }
 
@@ -33,9 +39,8 @@ class NazionalitateaController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->managerRegistry->getManager();
-            $entityManager->persist($nazionalitatea);
-            $entityManager->flush();
+            $this->entityManager->persist($nazionalitatea);
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('nazionalitatea_index');
         }
@@ -47,7 +52,7 @@ class NazionalitateaController extends AbstractController
     }
 
     #[Route(path: '/{id}', name: 'nazionalitatea_show', methods: ['GET'])]
-    public function show(Nazionalitatea $nazionalitatea): Response
+    public function show(#[MapEntity(id: 'id')] Nazionalitatea $nazionalitatea): Response
     {
         return $this->render('nazionalitatea/show.html.twig', [
             'nazionalitatea' => $nazionalitatea,
@@ -55,13 +60,13 @@ class NazionalitateaController extends AbstractController
     }
 
     #[Route(path: '/{id}/edit', name: 'nazionalitatea_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Nazionalitatea $nazionalitatea): Response
+    public function edit(Request $request, #[MapEntity(id: 'id')] Nazionalitatea $nazionalitatea): Response
     {
         $form = $this->createForm(NazionalitateaType::class, $nazionalitatea);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->managerRegistry->getManager()->flush();
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('nazionalitatea_index');
         }
@@ -73,12 +78,11 @@ class NazionalitateaController extends AbstractController
     }
 
     #[Route(path: '/{id}', name: 'nazionalitatea_delete', methods: ['POST'])]
-    public function delete(Request $request, Nazionalitatea $nazionalitatea): Response
+    public function delete(Request $request, #[MapEntity(id: 'id')] Nazionalitatea $nazionalitatea): Response
     {
         if ($this->isCsrfTokenValid('delete'.$nazionalitatea->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->managerRegistry->getManager();
-            $entityManager->remove($nazionalitatea);
-            $entityManager->flush();
+            $this->entityManager->remove($nazionalitatea);
+            $this->entityManager->flush();
         }
 
         return $this->redirectToRoute('nazionalitatea_index');

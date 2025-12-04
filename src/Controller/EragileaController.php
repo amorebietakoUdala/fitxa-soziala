@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Eragilea;
 use App\Form\EragileaType;
 use App\Repository\EragileaRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,42 +18,32 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class EragileaController extends AbstractController
 {
 
-    public function __construct(private readonly \Doctrine\Persistence\ManagerRegistry $managerRegistry)
+    public function __construct(
+        private readonly EntityManagerInterface $entityManager,
+        private readonly EragileaRepository $eragileaRepository, 
+    )
     {
     }
+
     #[Route(path: '/', name: 'eragilea_index', methods: ['GET'])]
-    public function index(EragileaRepository $eragileaRepository, TranslatorInterface $translator ): Response
+    public function index( ): Response
     {
-    
-        
-        //echo "zzzAAA>>>>: ". print_r($translator,1);
-        
-        $edit=$translator->trans("edit");
-        
-        
         $options = ['decorate' => true, 'rootOpen' => '<ul>', 'rootClose' => '</ul>', 'childOpen' => '<li>', 'childClose' => '</li>', 'nodeDecorator' => fn($node) => $node['eragilea_eu'] . ' // ' . $node['eragilea_es'] .'<a href="'.$this->generateUrl('eragilea_edit', ['id'=>$node['id']] ).'">'.'edit'.'</a>'];
-        $htmlTree = $eragileaRepository->childrenHierarchy(
+        $htmlTree = $this->eragileaRepository->childrenHierarchy(
             null, /* starting from root nodes */
             false, /* true: load all children, false: only direct */
             $options
         );
     
-    
-    
-    
-    
-    
-    
-    
         //$repo = $em->getRepository('Entity\Eragilea');
 
-        //$tree = $eragileaRepository->createQueryBuilder('node')->getQuery()
+        //$tree = $this->eragileaRepository->createQueryBuilder('node')->getQuery()
          //   ->setHint(\Doctrine\ORM\Query::HINT_INCLUDE_META_COLUMNS, true)
          //   ->getResult('tree');
         
-        $tree = $eragileaRepository->getNodesHierarchy();
+        $tree = $this->eragileaRepository->getNodesHierarchy();
         return $this->render('eragilea/index.html.twig', [
-            'eragileas' => $eragileaRepository->findAll(),
+            'eragileas' => $this->eragileaRepository->findAll(),
             'htmlTree' => $htmlTree
             //'eragileas' =>$tree
         ]);
@@ -65,9 +57,8 @@ class EragileaController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->managerRegistry->getManager();
-            $entityManager->persist($eragilea);
-            $entityManager->flush();
+            $this->entityManager->persist($eragilea);
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('eragilea_index');
         }
@@ -87,13 +78,13 @@ class EragileaController extends AbstractController
     }
 
     #[Route(path: '/{id}/edit', name: 'eragilea_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Eragilea $eragilea): Response
+    public function edit(Request $request, #[MapEntity(id: 'id')] Eragilea $eragilea): Response
     {
         $form = $this->createForm(EragileaType::class, $eragilea);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->managerRegistry->getManager()->flush();
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('eragilea_index');
         }
@@ -105,12 +96,11 @@ class EragileaController extends AbstractController
     }
 
     #[Route(path: '/{id}', name: 'eragilea_delete', methods: ['POST'])]
-    public function delete(Request $request, Eragilea $eragilea): Response
+    public function delete(Request $request, #[MapEntity(id: 'id')] Eragilea $eragilea): Response
     {
         if ($this->isCsrfTokenValid('delete'.$eragilea->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->managerRegistry->getManager();
-            $entityManager->remove($eragilea);
-            $entityManager->flush();
+            $this->entityManager->remove($eragilea);
+            $this->entityManager->flush();
         }
 
         return $this->redirectToRoute('eragilea_index');

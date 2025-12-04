@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Estatuak;
 use App\Form\EstatuakType;
 use App\Repository\EstatuakRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,14 +15,17 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route(path: '/{_locale<%supported_locales%>}/estatuak')]
 class EstatuakController extends AbstractController
 {
-    public function __construct(private readonly \Doctrine\Persistence\ManagerRegistry $managerRegistry)
+    public function __construct(
+        private readonly EntityManagerInterface $entityManager,
+        private readonly EstatuakRepository $estatuakRepository
+    )
     {
     }
     #[Route(path: '/', name: 'estatuak_index', methods: ['GET'])]
-    public function index(EstatuakRepository $estatuakRepository): Response
+    public function index(): Response
     {
         return $this->render('estatuak/index.html.twig', [
-            'estatuaks' => $estatuakRepository->findAll(),
+            'estatuaks' => $this->estatuakRepository->findAll(),
         ]);
     }
 
@@ -32,9 +37,8 @@ class EstatuakController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->managerRegistry->getManager();
-            $entityManager->persist($estatuak);
-            $entityManager->flush();
+            $this->entityManager->persist($estatuak);
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('estatuak_index');
         }
@@ -46,7 +50,7 @@ class EstatuakController extends AbstractController
     }
 
     #[Route(path: '/{id}', name: 'estatuak_show', methods: ['GET'])]
-    public function show(Estatuak $estatuak): Response
+    public function show(#[MapEntity(id: 'id')] Estatuak $estatuak): Response
     {
         return $this->render('estatuak/show.html.twig', [
             'estatuak' => $estatuak,
@@ -54,13 +58,13 @@ class EstatuakController extends AbstractController
     }
 
     #[Route(path: '/{id}/edit', name: 'estatuak_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Estatuak $estatuak): Response
+    public function edit(Request $request, #[MapEntity(id: 'id')] Estatuak $estatuak): Response
     {
         $form = $this->createForm(EstatuakType::class, $estatuak);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->managerRegistry->getManager()->flush();
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('estatuak_index');
         }
@@ -72,12 +76,11 @@ class EstatuakController extends AbstractController
     }
 
     #[Route(path: '/{id}', name: 'estatuak_delete', methods: ['POST'])]
-    public function delete(Request $request, Estatuak $estatuak): Response
+    public function delete(Request $request, #[MapEntity(id: 'id')] Estatuak $estatuak): Response
     {
         if ($this->isCsrfTokenValid('delete'.$estatuak->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->managerRegistry->getManager();
-            $entityManager->remove($estatuak);
-            $entityManager->flush();
+            $this->entityManager->remove($estatuak);
+            $this->entityManager->flush();
         }
 
         return $this->redirectToRoute('estatuak_index');
