@@ -9,7 +9,7 @@
     "bootstrap": "^4.6.0",
     "core-js": "^3.43.0",
     "jquery": "^3.6.1",
-    "webpack": "^5.99.9",
+    "webpack": "^5.104.1",
     "webpack-cli": "^6.0.1",
     "webpack-notifier": "^1.15"
   },
