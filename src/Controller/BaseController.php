@@ -16,7 +16,7 @@ class BaseController extends AbstractController
             $request->getMethod() === Request::METHOD_GET || 
             $request->getMethod() === Request::METHOD_POST || 
             $request->getMethod() === Request::METHOD_DELETE ) {
-            $this->queryParams['page'] = 0;
+            $this->queryParams['page'] = 1;
             $this->queryParams['pageSize'] = 10;
             $this->queryParams['sortName'] = 0;
             $this->queryParams['sortOrder'] = 'desc';
@@ -24,7 +24,11 @@ class BaseController extends AbstractController
             $this->queryParams = array_merge($this->queryParams, $request->query->all());
             if ( $this->queryParams !== null ) {
                 $query = parse_url((string) $this->queryParams['returnUrl'], PHP_URL_QUERY);
-                parse_str($query,$query);
+                if ( $query === null) {
+                    $query = [];
+                } else {
+                    parse_str($query,$query);
+                }
                 $this->queryParams = array_merge($this->queryParams, $query);
             }
         }
