@@ -19,7 +19,7 @@ class BaseController extends AbstractController
             $this->queryParams['page'] = 1;
             $this->queryParams['pageSize'] = 10;
             $this->queryParams['sortName'] = 0;
-            $this->queryParams['sortOrder'] = 'asc';
+            $this->queryParams['sortOrder'] = 'desc';
             $this->queryParams['returnUrl'] = null;
             $this->queryParams = array_merge($this->queryParams, $request->query->all());
             if ( $this->queryParams !== null ) {
