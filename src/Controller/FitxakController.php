@@ -112,13 +112,13 @@ class FitxakController extends BaseController
         $fitxak->setErabiltzailea($user->getUsername());
         $this->em->persist($fitxak);
         $this->em->flush();
-        return $this->redirect($request->get('returnUrl'));
+        return $this->redirect($request->query->get('returnUrl'));
     }
 
     #[Route(path: '/{id}', name: 'fitxak_delete', methods: ['POST'])]
     public function delete(Request $request, #[MapEntity(id: 'id')] Fitxak $fitxak): Response
     {
-        $returnUrl = $request->get('returnUrl');
+        $returnUrl = $request->query->get('returnUrl');
         if ($this->isCsrfTokenValid('delete' . $fitxak->getId(), $request->request->get('_token'))) {
             $this->em->remove($fitxak);
             $this->em->flush();

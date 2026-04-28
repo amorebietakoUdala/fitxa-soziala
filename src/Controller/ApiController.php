@@ -19,7 +19,7 @@ class ApiController extends AbstractController
     #[Route(path: '/children', name: 'api_get_arrazoiak', methods: ['GET'])]
     public function listLevel(Request $request): JsonResponse
     {
-        $id = $request->get('id');
+        $id = $request->query->get('id');
         if ( null == $id ) {
             return JsonResponse::fromJsonString('[]');
         }
